@@ -45,6 +45,18 @@ const contactSchema = Yup.object().shape({
 });
 
 const Contact = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+
+  const handleSubmit = async (values, { setSubmitting }) => {
+    setIsSubmitting(true);
+
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setSubmitSuccess(true);
+      setSubmitting(false);
+    }, 1500);
+  };
   return (
     <div>Contact</div>
   )
