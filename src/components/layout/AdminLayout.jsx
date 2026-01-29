@@ -39,6 +39,18 @@ const AdminLayout = () => {
             setSidebarOpen(false);
         }
     }, [location.pathname, isMobile]);
+
+    const isActive = (path) => {
+        return location.pathname === path || (path !== '/admin' && location.pathname.startsWith(path));
+    };
+
+    const toggleSidebar = () => {
+        setSidebarOpen(!sidebarOpen);
+    };
+
+    const closeSidebar = () => {
+        setSidebarOpen(false);
+    };
   return (
     <div>AdminLayout</div>
   )
