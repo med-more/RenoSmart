@@ -174,3 +174,7 @@ const renovationSlice = createSlice({
       });
   },
 });
+
+export const { setCurrentRequest, clearCurrentRequest } = renovationSlice.actions;
+
+export default renovationSlice.reducer;
