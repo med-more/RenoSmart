@@ -1,3 +1,184 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .rounded-asymmetric {
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 1.5rem;
+    border-bottom-left-radius: 1.5rem;
+    border-bottom-right-radius: 0.5rem;
+  }
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: #374151;
+
+  @apply text-[15px] leading-relaxed;
+}
+
+
+input,
+textarea,
+select {
+  @apply text-sm rounded-lg border-gray-300 focus:border-teal focus:ring-1 focus:ring-teal bg-gray-50 transition-all duration-200;
+  padding: 0.5rem 0.75rem !important;
+
+}
+
+label {
+  @apply text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1 block;
+}
+
+
+.btn-radius-asymmetric {
+  border-top-left-radius: 0.5rem;
+  /* Simple radius */
+  border-top-right-radius: 1.5rem;
+  /* Rounded radius */
+  border-bottom-left-radius: 1.5rem;
+  /* Rounded radius */
+  border-bottom-right-radius: 0.5rem;
+  /* Simple radius */
+}
+
+
+
+.btn-orange {
+  @apply bg-orange hover:bg-orange-dark text-white font-bold py-2 px-4 transition-colors shadow-xl text-sm uppercase tracking-wide rounded-asymmetric;
+}
+
+.btn-orange:hover {
+  transform: translateY(-1px);
+}
+
+.btn-teal {
+  @apply bg-teal hover:bg-teal-dark text-white font-medium py-2.5 px-6 transition-all duration-300 shadow-sm hover:shadow text-sm rounded-full;
+}
+
+.btn-teal:hover {
+  transform: translateY(-1px);
+}
+
+
+
+.card {
+  @apply bg-white rounded-xl shadow-sm border border-gray-100 p-5 transition-all duration-300;
+}
+
+.card:hover {
+  @apply shadow-md border-gray-200;
+  transform: translateY(-2px);
+}
+
+
+
+.card-service {
+  @apply bg-white rounded-xl shadow-sm border border-gray-100 p-6 text-center transition-all duration-300;
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-service:hover {
+  @apply shadow-md border-teal/20;
+  transform: translateY(-4px);
+}
+
+
+.icon-gold {
+  font-size: 3rem;
+  filter: drop-shadow(0 2px 4px rgba(212, 175, 55, 0.3));
+}
+
+
+.top-bar {
+  @apply bg-gray-800 text-gray-300 text-xs py-2;
+  background-color: #1f2937;
+}
+
+
+
+.section-title {
+  @apply text-3xl md:text-4xl font-bold text-gray-900 mb-6 relative tracking-tight;
+}
+
+.section-title::after {
+  content: '';
+  @apply absolute bottom-0 left-1/2 transform -translate-x-1/2 w-12 h-1 bg-orange rounded-full;
+  margin-top: 0.75rem;
+}
+
+
+
+.testimonial-card {
+  @apply bg-white rounded-xl shadow-sm border border-gray-100 p-5 transition-all duration-300;
+}
+
+/* Cartes de chiffres clés teal */
+.stat-card {
+  @apply bg-teal rounded-xl p-8 text-white text-center shadow-xl transition-all duration-300;
+  box-shadow: 0 10px 15px -3px rgba(0, 174, 174, 0.3), 0 4px 6px -2px rgba(0, 174, 174, 0.2);
+}
+
+.stat-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 20px 25px -5px rgba(0, 174, 174, 0.4), 0 10px 10px -5px rgba(0, 174, 174, 0.3);
+}
+
+/* Overlay pour les images */
+.image-overlay {
+  @apply absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent;
+}
+
+/* Bouton avec sous-bouton imbriqué (style Camif Habitat) */
+.btn-nested {
+  @apply relative inline-block;
+}
+
+.btn-nested-sub {
+  @apply absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-orange hover:bg-orange-dark text-white text-xs font-medium px-4 py-1.5 shadow-md transition-all duration-300 rounded-full;
+}
+
+.btn-nested-sub:hover {
+  transform: translate(-50%, -2px);
+  box-shadow: 0 6px 20px 0 rgba(252, 183, 53, 0.5);
+}
+
+/* Newsletter section avec bande orange */
+.newsletter-section {
+  @apply bg-white rounded-xl shadow-2xl overflow-hidden;
+}
+
+.newsletter-header {
+  @apply bg-orange text-white py-3 px-5 font-bold text-lg;
+}
+
+/* Widget contact flottant */
+.contact-widget {
+  @apply fixed bottom-6 right-6 z-50 bg-orange rounded-xl shadow-2xl p-5 max-w-xs transition-all duration-300;
+  box-shadow: 0 10px 25px -5px rgba(252, 183, 53, 0.5), 0 10px 10px -5px rgba(252, 183, 53, 0.3);
+}
+
+.contact-widget:hover {
+  transform: scale(1.05);
+  box-shadow: 0 20px 25px -5px rgba(252, 183, 53, 0.6), 0 10px 10px -5px rgba(252, 183, 53, 0.4);
+}
+
+/* Carousel flèches orange */
+.carousel-arrow {
+  @apply absolute top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 p-3 rounded-full shadow-lg transition-all duration-300 z-10;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-arrow:hover {
+  @apply bg-orange text-white;
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 12px -2px rgba(252, 183, 53, 0.4);
+}
