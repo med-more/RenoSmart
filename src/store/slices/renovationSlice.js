@@ -86,3 +86,10 @@ export const removeRenovationRequest = createAsyncThunk(
     }
   }
 );
+
+const initialState = {
+  requests: [],
+  currentRequest: null,
+  loading: false,
+  error: null,
+};
