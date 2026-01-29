@@ -93,3 +93,84 @@ const initialState = {
   loading: false,
   error: null,
 };
+
+const renovationSlice = createSlice({
+  name: 'renovation',
+  initialState,
+  reducers: {
+
+    setCurrentRequest: (state, action) => {
+      state.currentRequest = action.payload;
+    },
+
+    clearCurrentRequest: (state) => {
+      state.currentRequest = null;
+    },
+  },
+  extraReducers: (builder) => {
+
+    builder
+      .addCase(addRenovationRequest.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addRenovationRequest.fulfilled, (state, action) => {
+        state.loading = false;
+        state.requests.push(action.payload);
+      })
+      .addCase(addRenovationRequest.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(getAllRenovationRequests.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getAllRenovationRequests.fulfilled, (state, action) => {
+        state.loading = false;
+        state.requests = action.payload || [];
+      })
+      .addCase(getAllRenovationRequests.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(updateRequestStatus.fulfilled, (state, action) => {
+        const index = state.requests.findIndex(req => req.id === action.payload.id);
+        if (index !== -1) {
+          state.requests[index] = action.payload;
+        }
+        if (state.currentRequest?.id === action.payload.id) {
+          state.currentRequest = action.payload;
+        }
+      })
+
+      .addCase(updateRequestInternalNotes.fulfilled, (state, action) => {
+        const index = state.requests.findIndex(req => req.id === action.payload.id);
+        if (index !== -1) {
+          state.requests[index] = action.payload;
+        }
+        if (state.currentRequest?.id === action.payload.id) {
+          state.currentRequest = action.payload;
+        }
+      })
+
+      .addCase(updateRequestPDF.fulfilled, (state, action) => {
+        const index = state.requests.findIndex(req => req.id === action.payload.id);
+        if (index !== -1) {
+          state.requests[index] = action.payload;
+        }
+        if (state.currentRequest?.id === action.payload.id) {
+          state.currentRequest = action.payload;
+        }
+      })
+
+      .addCase(removeRenovationRequest.fulfilled, (state, action) => {
+        state.requests = state.requests.filter(req => req.id !== action.payload);
+        if (state.currentRequest?.id === action.payload) {
+          state.currentRequest = null;
+        }
+      });
+  },
+});
