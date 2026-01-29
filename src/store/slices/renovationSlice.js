@@ -31,3 +31,22 @@ export const getAllRenovationRequests = createAsyncThunk(
     }
   }
 );
+
+export const updateRequestStatus = createAsyncThunk(
+  'renovation/updateStatus',
+  async ({ id, status }, { rejectWithValue }) => {
+    try {
+      const response = await updateRenovationStatus(id, status);
+
+      try {
+        await notifyStatusChange(response.data);
+      } catch (notifyError) {
+
+        console.warn('Notification n8n (changement de statut) non envoyée :', notifyError);
+      }
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
