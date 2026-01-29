@@ -50,3 +50,15 @@ export const updateRequestStatus = createAsyncThunk(
     }
   }
 );
+
+export const updateRequestInternalNotes = createAsyncThunk(
+  'renovation/updateInternalNotes',
+  async ({ id, internalNotes }, { rejectWithValue }) => {
+    try {
+      const response = await updateRenovationRequest(id, { internalNotes });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
