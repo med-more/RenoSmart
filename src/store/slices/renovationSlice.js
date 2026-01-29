@@ -74,3 +74,15 @@ export const updateRequestPDF = createAsyncThunk(
     }
   }
 );
+
+export const removeRenovationRequest = createAsyncThunk(
+  'renovation/deleteRequest',
+  async (id, { rejectWithValue }) => {
+    try {
+      await deleteRenovationRequest(id);
+      return id;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
