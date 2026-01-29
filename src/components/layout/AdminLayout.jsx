@@ -8,6 +8,13 @@ const AdminLayout = () => {
     const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth >= 768);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
+
+    useEffect(() => {
+        const isAuthenticated = localStorage.getItem('adminAuthenticated');
+        if (isAuthenticated !== 'true') {
+            navigate('/admin/login');
+        }
+    }, [navigate]);
   return (
     <div>AdminLayout</div>
   )
