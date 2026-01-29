@@ -62,3 +62,15 @@ export const updateRequestInternalNotes = createAsyncThunk(
     }
   }
 );
+
+export const updateRequestPDF = createAsyncThunk(
+  'renovation/updatePDF',
+  async ({ id, pdfFile }, { rejectWithValue }) => {
+    try {
+      const response = await updateRenovationRequest(id, { pdfFile });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
