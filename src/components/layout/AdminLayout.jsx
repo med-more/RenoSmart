@@ -32,6 +32,13 @@ const AdminLayout = () => {
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
+    useEffect(() => {
+
+      if (isMobile) {
+            setSidebarOpen(false);
+        }
+    }, [location.pathname, isMobile]);
   return (
     <div>AdminLayout</div>
   )
