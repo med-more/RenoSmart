@@ -2,7 +2,6 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { WORK_TYPES } from '../../utils/constants';
-import { generateEstimate } from '../../utils/calculateEstimate';
 
 
 const renovationSchema = Yup.object().shape({
@@ -34,13 +33,10 @@ const renovationSchema = Yup.object().shape({
     .max(2000, 'La description ne peut pas dépasser 2000 caractères')
     .required('La description est requise'),
 });
+
 const RenovationForm = ({ onSubmit }) => {
   const handleSubmit = (values, { setSubmitting, setStatus }) => {
     try {
-      const estimate = generateEstimate({
-        workType: values.workType,
-        surface: parseFloat(values.surface),
-      });
 
       const requestData = {
         clientName: values.clientName,
@@ -50,10 +46,10 @@ const RenovationForm = ({ onSubmit }) => {
         surface: parseFloat(values.surface),
         budget: values.budget ? parseFloat(values.budget) : null,
         description: values.description,
-        estimate,
         status: 'Pending',
         createdAt: new Date().toISOString(),
       };
+
 
       onSubmit(requestData);
       setSubmitting(false);
@@ -62,6 +58,7 @@ const RenovationForm = ({ onSubmit }) => {
       setSubmitting(false);
     }
   };
+
   return (
     <Formik
       initialValues={{
@@ -226,7 +223,7 @@ const RenovationForm = ({ onSubmit }) => {
         </Form>
       )}
     </Formik>
-  )
-}
+  );
+};
 
-export default RenovationForm
+export default RenovationForm;
