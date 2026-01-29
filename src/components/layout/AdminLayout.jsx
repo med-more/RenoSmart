@@ -15,6 +15,23 @@ const AdminLayout = () => {
             navigate('/admin/login');
         }
     }, [navigate]);
+
+    useEffect(() => {
+        const handleResize = () => {
+            const mobile = window.innerWidth < 768;
+            setIsMobile(mobile);
+
+            if (mobile) {
+                setSidebarOpen(false);
+            }
+        };
+
+
+        handleResize();
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
   return (
     <div>AdminLayout</div>
   )
