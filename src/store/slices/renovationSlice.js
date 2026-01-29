@@ -19,3 +19,15 @@ export const addRenovationRequest = createAsyncThunk(
     }
   }
 );
+
+export const getAllRenovationRequests = createAsyncThunk(
+  'renovation/fetchRequests',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await fetchRenovationRequests();
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
