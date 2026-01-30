@@ -70,6 +70,12 @@ const AdminRequests = () => {
     approved: filteredRequests.filter((r) => r.status === 'Approved').length,
     rejected: filteredRequests.filter((r) => r.status === 'Rejected').length,
   };
+
+  const itemsPerPage = isMobile ? 6 : 10;
+  const totalPages = Math.ceil(filteredRequests.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedRequests = filteredRequests.slice(startIndex, endIndex);
   return (
     <div>AdminRequests</div>
   )
