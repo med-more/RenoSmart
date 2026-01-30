@@ -62,6 +62,14 @@ const AdminRequests = () => {
       }
       return 0;
     });
+
+    const stats = {
+    total: filteredRequests.length,
+    pending: filteredRequests.filter((r) => r.status === 'Pending').length,
+    inReview: filteredRequests.filter((r) => r.status === 'In Review').length,
+    approved: filteredRequests.filter((r) => r.status === 'Approved').length,
+    rejected: filteredRequests.filter((r) => r.status === 'Rejected').length,
+  };
   return (
     <div>AdminRequests</div>
   )
