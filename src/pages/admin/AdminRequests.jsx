@@ -24,6 +24,10 @@ const AdminRequests = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+    useEffect(() => {
+    dispatch(getAllRenovationRequests());
+  }, [dispatch]);
   return (
     <div>AdminRequests</div>
   )
