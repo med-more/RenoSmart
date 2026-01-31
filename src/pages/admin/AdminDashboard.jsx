@@ -50,6 +50,12 @@ const AdminDashboard = () => {
   const totalBudget = requests.reduce((sum, req) => {
     return sum + (req.estimatedBudget || req.budget || req.estimate?.budget || 0);
   }, 0);
+
+  const workTypeStats = requests.reduce((acc, req) => {
+    const type = req.workType || 'Autres';
+    acc[type] = (acc[type] || 0) + 1;
+    return acc;
+  }, {});
   return (
     <div>AdminDashboard</div>
   )
