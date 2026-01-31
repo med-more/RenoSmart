@@ -76,6 +76,32 @@ const AdminDashboard = () => {
   });
 
   const maxRequests = Math.max(...requestsByDay, 1);
+
+  const calculateInsights = () => {
+    const insights = [];
+    
+
+    const recentDays = requestsByDay.slice(-3);
+    const previousDays = requestsByDay.slice(0, 3);
+    const recentAvg = recentDays.reduce((a, b) => a + b, 0) / recentDays.length;
+    const previousAvg = previousDays.reduce((a, b) => a + b, 0) / previousDays.length;
+    const activityTrend = recentAvg > previousAvg ? 'augmentation' : recentAvg < previousAvg ? 'diminution' : 'stable';
+    
+    if (activityTrend === 'augmentation') {
+      insights.push({
+        type: 'success',
+        icon: '📈',
+        title: 'Tendance positive',
+        message: `L'activité est en hausse avec ${recentAvg.toFixed(1)} demandes/jour en moyenne sur les 3 derniers jours.`
+      });
+    } else if (activityTrend === 'diminution') {
+      insights.push({
+        type: 'warning',
+        icon: '📉',
+        title: 'Attention',
+        message: `L'activité a diminué. Pensez à relancer vos campagnes marketing.`
+      });
+    }
   return (
     <div>AdminDashboard</div>
   )
