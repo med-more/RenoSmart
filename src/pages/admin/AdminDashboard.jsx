@@ -56,6 +56,26 @@ const AdminDashboard = () => {
     acc[type] = (acc[type] || 0) + 1;
     return acc;
   }, {});
+
+  const last7Days = Array.from({ length: 7 }, (_, i) => {
+    const date = new Date();
+    date.setDate(date.getDate() - (6 - i));
+    return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
+  });
+
+  const requestsByDay = last7Days.map((day) => {
+    const dayStart = new Date(day);
+    dayStart.setHours(0, 0, 0, 0);
+    const dayEnd = new Date(day);
+    dayEnd.setHours(23, 59, 59, 999);
+    
+    return requests.filter((req) => {
+      const reqDate = new Date(req.createdAt);
+      return reqDate >= dayStart && reqDate <= dayEnd;
+    }).length;
+  });
+
+  const maxRequests = Math.max(...requestsByDay, 1);
   return (
     <div>AdminDashboard</div>
   )
