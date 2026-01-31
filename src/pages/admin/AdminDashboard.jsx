@@ -246,7 +246,249 @@ const AdminDashboard = () => {
   ];
     }
   return (
-    <div>AdminDashboard</div>
+    <div className="space-y-6">
+
+      <div>
+        <h1 className="text-3xl font-bold text-gray-900">Tableau de bord</h1>
+        <p className="text-gray-600 mt-1">
+          Vue d'ensemble de l'activité et des performances de vos demandes de rénovation
+        </p>
+      </div>
+
+
+      <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
+        {statCards.map((stat, index) => (
+          <motion.div
+            key={stat.title}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.1 }}
+            className="bg-white border-2 border-gray-200 rounded-asymmetric p-3 sm:p-4 md:p-6 hover:shadow-lg transition-all flex flex-col justify-between"
+          >
+            <div className="flex items-start justify-between mb-2 sm:mb-3 md:mb-4">
+              <div className={`${stat.bgColor} p-1.5 sm:p-2 md:p-3 rounded-asymmetric`}>
+                <div className={`${stat.textColor} w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8`}>
+                  {stat.icon}
+                </div>
+              </div>
+              <span
+                className={`text-[10px] sm:text-xs font-bold px-1 sm:px-1.5 md:px-2 py-0.5 sm:py-1 rounded-full ${
+                  stat.changeType === 'positive'
+                    ? 'bg-green-100 text-green-600'
+                    : 'bg-red-100 text-red-600'
+                }`}
+              >
+                {stat.change}
+              </span>
+            </div>
+            <h3 className="text-[10px] sm:text-xs md:text-sm font-medium text-gray-600 mb-1 sm:mb-2">
+              {stat.title}
+            </h3>
+            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-gray-900">{stat.value}</p>
+          </motion.div>
+        ))}
+      </div>
+
+
+      {displayInsights.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white border-2 border-gray-200 rounded-asymmetric p-4 sm:p-6"
+        >
+          <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gray-100 rounded-asymmetric flex items-center justify-center flex-shrink-0">
+              <svg className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+              </svg>
+            </div>
+            <div>
+              <h2 className="text-lg sm:text-xl font-bold text-gray-900">Insights</h2>
+              <p className="text-xs sm:text-sm text-gray-600">
+                Analyse de vos données
+              </p>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+            {displayInsights.map((insight, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className="bg-gray-50 border-2 border-gray-200 rounded-asymmetric p-3 sm:p-4 hover:shadow-md transition-all"
+            >
+              <div className="flex items-start gap-2 sm:gap-3">
+                <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-asymmetric flex items-center justify-center flex-shrink-0 ${
+                  insight.type === 'success' ? 'bg-green-100' :
+                  insight.type === 'warning' ? 'bg-yellow-100' :
+                  'bg-blue-100'
+                }`}>
+                  <span className="text-base sm:text-lg">{insight.icon}</span>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-sm sm:text-base font-bold text-gray-900 mb-1">
+                    {insight.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-gray-700 leading-relaxed break-words">
+                    {insight.message}
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      )}
+
+
+      <div className="grid grid-cols-1 2xl:grid-cols-3 gap-6">
+
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="bg-white border-2 border-gray-200 rounded-asymmetric p-4 sm:p-6 2xl:col-span-2"
+        >
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4">
+            <h3 className="text-lg font-bold text-gray-900">Activité des demandes (7 derniers jours)</h3>
+            <span className="text-xs sm:text-sm text-gray-500">
+              {stats.total} demandes au total • {stats.active} actives
+            </span>
+          </div>
+          <div className="h-56 sm:h-64 flex items-end justify-between gap-2 sm:gap-3">
+            {requestsByDay.map((count, index) => (
+              <div key={index} className="flex-1 flex flex-col items-center gap-1 sm:gap-2">
+                <div
+                  className="w-full relative bg-gray-100 rounded-asymmetric overflow-hidden"
+                  style={{ height: '160px' }}
+                >
+                  <motion.div
+                    initial={{ height: 0 }}
+                    animate={{ height: `${(count / maxRequests) * 100}%` }}
+                    transition={{ delay: index * 0.05, duration: 0.4 }}
+                    className="absolute bottom-0 w-full bg-gradient-to-t from-orange to-orange-dark rounded-asymmetric"
+                  />
+                </div>
+                <span className="text-[10px] sm:text-xs text-gray-600 font-medium">
+                  {last7Days[index]}
+                </span>
+                <span className="text-xs font-bold text-gray-900">{count}</span>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="space-y-6"
+        >
+
+          <div className="bg-white border-2 border-gray-200 rounded-asymmetric p-4 sm:p-6">
+            <h3 className="text-lg font-bold text-gray-900 mb-4">
+              Répartition par type de travaux
+            </h3>
+            {stats.total === 0 ? (
+              <p className="text-sm text-gray-500">Aucune donnée disponible pour le moment.</p>
+            ) : (
+              <div className="space-y-3">
+                {Object.entries(workTypeStats)
+                  .sort((a, b) => b[1] - a[1])
+                  .slice(0, 4)
+                  .map(([type, count], index) => {
+                    const percentage = (count / stats.total) * 100;
+                    return (
+                      <div key={type} className="space-y-1.5">
+                        <div className="flex justify-between items-center text-xs sm:text-sm">
+                          <span className="font-medium text-gray-700">{type}</span>
+                          <span className="font-bold text-gray-900">
+                            {count} ({percentage.toFixed(0)}%)
+                          </span>
+                        </div>
+                        <div className="w-full bg-gray-100 rounded-full h-2 overflow-hidden">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: `${percentage}%` }}
+                            transition={{ delay: index * 0.1, duration: 0.4 }}
+                            className="h-full bg-gradient-to-r from-teal to-teal-dark rounded-full"
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
+              </div>
+            )}
+          </div>
+
+
+          <div className="bg-white border-2 border-gray-200 rounded-asymmetric p-4 sm:p-6 space-y-4">
+            <div className="flex items-center justify-between gap-2">
+              <h3 className="text-lg font-bold text-gray-900">Dernières demandes</h3>
+              <Link
+                to="/admin/requests"
+                className="text-xs sm:text-sm font-bold text-teal hover:text-orange transition-colors"
+              >
+                Voir toutes les demandes
+              </Link>
+            </div>
+            {loading ? (
+              <div className="flex flex-col items-center gap-3 py-6">
+                <div className="w-8 h-8 border-4 border-orange border-t-transparent rounded-full animate-spin" />
+                <span className="text-xs sm:text-sm text-gray-500">Chargement...</span>
+              </div>
+            ) : filteredRequests.length === 0 ? (
+              <p className="text-sm text-gray-500">Aucune demande récente.</p>
+            ) : (
+              <ul className="space-y-3 max-h-64 overflow-y-auto">
+                {filteredRequests.slice(0, 5).map((req) => (
+                  <li
+                    key={req.id}
+                    className="flex items-start justify-between gap-3 p-3 rounded-asymmetric bg-gray-50 hover:bg-gray-100 transition-colors"
+                  >
+                    <div className="flex items-start gap-2 sm:gap-3">
+                      <div className="h-8 w-8 sm:h-9 sm:w-9 rounded-full bg-gradient-to-br from-teal to-teal-dark text-white flex items-center justify-center font-bold text-xs sm:text-sm flex-shrink-0">
+                        {req.clientName?.charAt(0).toUpperCase() || '?'}
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-xs sm:text-sm font-bold text-gray-900 truncate">
+                          {req.clientName || 'N/A'}
+                        </p>
+                        <p className="text-[11px] sm:text-xs text-gray-500 truncate">
+                          {req.workType || 'Type inconnu'} •{' '}
+                          {new Date(req.createdAt).toLocaleDateString('fr-FR', {
+                            day: 'numeric',
+                            month: 'short',
+                          })}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-end gap-1">
+                      <span
+                        className={`px-2 py-0.5 rounded-asymmetric text-[10px] sm:text-xs font-bold ${
+                          STATUS_COLORS[req.status] || 'bg-gray-100 text-gray-600'
+                        }`}
+                      >
+                        {STATUS_LABELS[req.status] || req.status}
+                      </span>
+                      <Link
+                        to={`/admin/requests/${req.id}`}
+                        className="inline-flex items-center gap-1 text-[11px] sm:text-xs text-teal hover:text-orange font-bold transition-colors"
+                      >
+                        Voir
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </Link>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </motion.div>
+      </div>
+    </div>
   )
 }
 
