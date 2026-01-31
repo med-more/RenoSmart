@@ -7,6 +7,11 @@ import { STATUS_LABELS, STATUS_COLORS } from '../../utils/constants';
 
 
 const AdminDashboard = () => {
+  const dispatch = useDispatch();
+  const { requests, loading } = useSelector((state) => state.renovation);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [dateFilter, setDateFilter] = useState('all');
   return (
     <div>AdminDashboard</div>
   )
