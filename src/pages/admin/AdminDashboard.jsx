@@ -16,6 +16,27 @@ const AdminDashboard = () => {
   useEffect(() => {
     dispatch(getAllRenovationRequests());
   }, [dispatch]);
+
+  const filteredRequests = requests.filter((request) => {
+    const matchesSearch =
+      request.clientName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      request.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      request.workType?.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = statusFilter === 'all' || request.status === statusFilter;
+    
+    let matchesDate = true;
+    if (dateFilter !== 'all') {
+      const requestDate = new Date(request.createdAt);
+      const now = new Date();
+      const daysDiff = Math.floor((now - requestDate) / (1000 * 60 * 60 * 24));
+      
+      if (dateFilter === 'today') matchesDate = daysDiff === 0;
+      else if (dateFilter === 'week') matchesDate = daysDiff <= 7;
+      else if (dateFilter === 'month') matchesDate = daysDiff <= 30;
+    }
+    
+    return matchesSearch && matchesStatus && matchesDate;
+  });
   return (
     <div>AdminDashboard</div>
   )
