@@ -46,6 +46,10 @@ const AdminDashboard = () => {
     rejected: requests.filter((r) => r.status === 'Rejected').length,
     active: requests.filter((r) => ['In Review', 'Approved'].includes(r.status)).length,
   };
+
+  const totalBudget = requests.reduce((sum, req) => {
+    return sum + (req.estimatedBudget || req.budget || req.estimate?.budget || 0);
+  }, 0);
   return (
     <div>AdminDashboard</div>
   )
