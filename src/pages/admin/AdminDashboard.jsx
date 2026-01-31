@@ -37,6 +37,15 @@ const AdminDashboard = () => {
     
     return matchesSearch && matchesStatus && matchesDate;
   });
+
+  const stats = {
+    total: requests.length,
+    pending: requests.filter((r) => r.status === 'Pending').length,
+    inReview: requests.filter((r) => r.status === 'In Review').length,
+    approved: requests.filter((r) => r.status === 'Approved').length,
+    rejected: requests.filter((r) => r.status === 'Rejected').length,
+    active: requests.filter((r) => ['In Review', 'Approved'].includes(r.status)).length,
+  };
   return (
     <div>AdminDashboard</div>
   )
