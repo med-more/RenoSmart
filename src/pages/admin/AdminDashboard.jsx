@@ -12,6 +12,10 @@ const AdminDashboard = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [dateFilter, setDateFilter] = useState('all');
+
+  useEffect(() => {
+    dispatch(getAllRenovationRequests());
+  }, [dispatch]);
   return (
     <div>AdminDashboard</div>
   )
