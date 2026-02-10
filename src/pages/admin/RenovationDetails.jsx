@@ -18,6 +18,13 @@ import { sendRequestDetailsEmail } from '../../services/renovationService';
 
 
 const RenovationDetails = () => {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { requests, currentRequest, loading, error } = useSelector((state) => state.renovation);
+  const [newStatus, setNewStatus] = useState('');
+  const [internalNotes, setInternalNotes] = useState(currentRequest?.internalNotes || '');
+  const [uploadingPDF, setUploadingPDF] = useState(false);
   return (
     <div>RenovationDetails</div>
   )
