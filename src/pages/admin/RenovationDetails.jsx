@@ -16,6 +16,7 @@ import { REQUEST_STATUSES, STATUS_LABELS, STATUS_COLORS } from '../../utils/cons
 import { sendRequestDetailsEmail } from '../../services/renovationService';
 
 
+
 const RenovationDetails = () => {
   return (
     <div>RenovationDetails</div>
