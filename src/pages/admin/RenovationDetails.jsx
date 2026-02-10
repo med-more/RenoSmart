@@ -18,6 +18,7 @@ import { sendRequestDetailsEmail } from '../../services/renovationService';
 
 
 const RenovationDetails = () => {
+  
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
