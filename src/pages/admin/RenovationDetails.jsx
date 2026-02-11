@@ -147,6 +147,9 @@ const RenovationDetails = () => {
       },
     });
   };
+
+    if (!currentRequest) return <div className="p-4 sm:p-6 md:p-8 text-center text-xs sm:text-sm text-gray-500">Chargement du dossier...</div>;
+
   return (
     <div>RenovationDetails</div>
   )
