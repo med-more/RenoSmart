@@ -38,6 +38,12 @@ const RenovationDetails = () => {
     }
     return () => { dispatch(clearMessages()); };
   }, [id, requests, dispatch]);
+
+  useEffect(() => {
+    if (currentRequest?.internalNotes !== undefined) {
+      setInternalNotes(currentRequest.internalNotes || '');
+    }
+  }, [currentRequest]);
   return (
     <div>RenovationDetails</div>
   )
