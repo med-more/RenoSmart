@@ -26,6 +26,18 @@ const RenovationDetails = () => {
   const [newStatus, setNewStatus] = useState('');
   const [internalNotes, setInternalNotes] = useState(currentRequest?.internalNotes || '');
   const [uploadingPDF, setUploadingPDF] = useState(false);
+
+  useEffect(() => {
+    const request = requests.find((r) => r.id === id);
+    if (request) {
+      dispatch(setCurrentRequest(request));
+      setNewStatus(request.status);
+      setInternalNotes(request.internalNotes || '');
+    } else {
+      dispatch(getAllRenovationRequests());
+    }
+    return () => { dispatch(clearMessages()); };
+  }, [id, requests, dispatch]);
   return (
     <div>RenovationDetails</div>
   )
