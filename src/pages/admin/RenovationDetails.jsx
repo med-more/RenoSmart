@@ -81,6 +81,72 @@ const RenovationDetails = () => {
       dispatch(setLoading(false));
     }
   };
+
+  const handleDelete = async () => {
+    toast((t) => (
+      <div className="flex flex-col gap-3">
+        <p className="font-bold text-gray-900">Confirmer la suppression</p>
+        <p className="text-sm text-gray-600">Êtes-vous sûr de vouloir supprimer ce dossier ? Cette action est irréversible.</p>
+        <div className="flex gap-2 mt-2">
+          <button
+            onClick={async () => {
+              toast.dismiss(t.id);
+              const loadingToast = toast.loading('Suppression en cours...', {
+                style: {
+                  borderRadius: '0.5rem 1.5rem 1.5rem 0.5rem',
+                  border: '2px solid #EF4444',
+                },
+              });
+              
+    try {
+      dispatch(setLoading(true));
+      await dispatch(removeRenovationRequest(id)).unwrap();
+                toast.success('Dossier supprimé avec succès', {
+                  id: loadingToast,
+                  icon: '🗑️',
+                  style: {
+                    borderRadius: '0.5rem 1.5rem 1.5rem 0.5rem',
+                    border: '2px solid #10B981',
+                  },
+                });
+                setTimeout(() => {
+                  navigate('/admin/requests');
+                }, 1000);
+    } catch (err) {
+                toast.error('Erreur lors de la suppression', {
+                  id: loadingToast,
+                  icon: '❌',
+                  style: {
+                    borderRadius: '0.5rem 1.5rem 1.5rem 0.5rem',
+                    border: '2px solid #EF4444',
+                  },
+                });
+      dispatch(setError('Erreur lors de la suppression.'));
+      dispatch(setLoading(false));
+    }
+            }}
+            className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-asymmetric text-sm transition-colors"
+          >
+            Supprimer
+          </button>
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-asymmetric text-sm transition-colors"
+          >
+            Annuler
+          </button>
+        </div>
+      </div>
+    ), {
+      duration: 10000,
+      style: {
+        borderRadius: '0.5rem 1.5rem 1.5rem 0.5rem',
+        border: '2px solid #EF4444',
+        padding: '16px',
+        minWidth: '320px',
+      },
+    });
+  };
   return (
     <div>RenovationDetails</div>
   )
