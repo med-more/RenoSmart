@@ -44,6 +44,43 @@ const RenovationDetails = () => {
       setInternalNotes(currentRequest.internalNotes || '');
     }
   }, [currentRequest]);
+
+  const handleStatusUpdate = async () => {
+    if (!newStatus || newStatus === currentRequest?.status) return;
+    
+    const loadingToast = toast.loading('Mise à jour du statut...', {
+      style: {
+        borderRadius: '0.5rem 1.5rem 1.5rem 0.5rem',
+        border: '2px solid #FFA726',
+      },
+    });
+
+    try {
+      dispatch(setLoading(true));
+      await dispatch(updateRequestStatus({ id, status: newStatus })).unwrap();
+      toast.success(`Statut mis à jour : ${STATUS_LABELS[newStatus]}`, {
+        id: loadingToast,
+        icon: '✅',
+        style: {
+          borderRadius: '0.5rem 1.5rem 1.5rem 0.5rem',
+          border: '2px solid #10B981',
+        },
+      });
+      dispatch(setSuccessMessage('Statut mis à jour !'));
+    } catch (err) {
+      toast.error('Erreur lors de la mise à jour du statut', {
+        id: loadingToast,
+        icon: '❌',
+        style: {
+          borderRadius: '0.5rem 1.5rem 1.5rem 0.5rem',
+          border: '2px solid #EF4444',
+        },
+      });
+      dispatch(setError('Erreur lors de la mise à jour.'));
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
   return (
     <div>RenovationDetails</div>
   )
