@@ -7,6 +7,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
+
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 
@@ -20,6 +21,7 @@ let DefaultIcon = L.icon({
 });
 
 L.Marker.prototype.options.icon = DefaultIcon;
+
 
 const contactSchema = Yup.object().shape({
   name: Yup.string()
@@ -57,6 +59,7 @@ const Contact = () => {
       setSubmitting(false);
     }, 1500);
   };
+
   return (
     <div className="bg-white min-h-screen">
 
@@ -84,7 +87,7 @@ const Contact = () => {
         </div>
       </section>
 
-
+      {/* Contact Form Section */}
       <section className="py-6 sm:py-8 md:py-12 lg:py-16 bg-white relative overflow-hidden">
         <div className="absolute left-0 top-0 bottom-0 w-0 sm:w-1/4 lg:w-1/3 bg-orange/10"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
@@ -386,7 +389,7 @@ const Contact = () => {
         </div>
       </section>
     </div>
-  )
-}
+  );
+};
 
-export default Contact
+export default Contact;
