@@ -10,3 +10,12 @@ export const createRenovationRequest = async(requestData) =>{
         throw new Error(`Erreur lors de la création de la demande: ${error.message}`);
     }
 };
+
+export const fetchRenovationRequests = async () => {
+    try {
+        const response = await api.get('');
+        return response;
+    } catch (error) {
+        throw new Error(`Erreur lors de la récupération des demandes: ${error.message}`);
+    }
+}; 
