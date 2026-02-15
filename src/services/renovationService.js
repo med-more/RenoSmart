@@ -28,3 +28,12 @@ export const fetchRenovationRequestById = async (id) => {
         throw new Error(`Erreur lors de la récupération de la demande: ${error.message}`);
     }
 };
+
+export const  updateRenovationStatus = async (id, status) => {
+    try {
+        const response = await axios.put(`/${id}`, {status});
+        return response;
+    } catch (error) {
+        throw new Error(`Erreur lors de la mise à jour du statut: ${error.message}`);
+    }
+};
