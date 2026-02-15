@@ -37,3 +37,12 @@ export const  updateRenovationStatus = async (id, status) => {
         throw new Error(`Erreur lors de la mise à jour du statut: ${error.message}`);
     }
 };
+
+export const updateInternalNotes = async(id, internalNotes) => {
+    try {
+        const response = await api.put(`/${id}`, { internalNotes });
+        return response;
+    } catch (error) {
+        throw new Error(`Erreur lors de la mise à jour des notes internes: ${error.message}`);
+    }
+};
