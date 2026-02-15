@@ -46,3 +46,12 @@ export const updateInternalNotes = async(id, internalNotes) => {
         throw new Error(`Erreur lors de la mise à jour des notes internes: ${error.message}`);
     }
 };
+
+export const updateRenovationRequest = async (id, requestData) => {
+  try {
+    const response = await api.put(`/${id}`, requestData);
+    return response;
+  } catch (error) {
+    throw new Error(`Erreur lors de la mise à jour de la demande: ${error.message}`);
+  }
+};
