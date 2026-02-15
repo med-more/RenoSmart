@@ -19,3 +19,12 @@ export const fetchRenovationRequests = async () => {
         throw new Error(`Erreur lors de la récupération des demandes: ${error.message}`);
     }
 }; 
+
+export const fetchRenovationRequestById = async (id) => {
+    try {
+        const response = await api.get(`/${id}`);
+        return response;
+    } catch (error) {
+        throw new Error(`Erreur lors de la récupération de la demande: ${error.message}`);
+    }
+};
