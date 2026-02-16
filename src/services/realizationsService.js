@@ -20,3 +20,25 @@ export const fetchRealizations = async () => {
     console.warn('Impossible de récupérer les projets depuis l\'API:', error.message);
   }
 };
+
+export const fetchRealizationById = async (id) =>{
+  try {
+    try {
+      const response = await realizationsApi.get(`/${id}`);
+      if (response.data) {
+        return response.data;
+      }
+    } catch (directError) {
+      console.log('Tentative de récupération directe échouée, recherche par champ id personnalisé...');
+    }
+    const allProjects = await fetchRealizations();
+    const project = allProjects.find(p => p.id === id);
+
+    if (project) {
+      return project
+      throw new Error('Projet non trouvé');
+    }
+  } catch (error) {
+    throw new Error(`Erreur lors de la récupération du projet: ${error.message}`);
+  }
+};
