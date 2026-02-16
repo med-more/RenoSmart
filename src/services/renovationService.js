@@ -55,3 +55,12 @@ export const updateRenovationRequest = async (id, requestData) => {
     throw new Error(`Erreur lors de la mise à jour de la demande: ${error.message}`);
   }
 };
+
+export const deleteRenovationRequest = async(id) =>{
+    try {
+        const response = await api.delete(`/${id}`);
+        return response;
+    } catch (error) {
+        throw new Error(`Erreur lors de la suppression de la demande: ${error.message}`);
+    }
+};
