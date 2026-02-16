@@ -42,3 +42,12 @@ export const fetchRealizationById = async (id) =>{
     throw new Error(`Erreur lors de la récupération du projet: ${error.message}`);
   }
 };
+
+export const updateRealization = async (id, projectData) => {
+  try {
+    const response = await realizationsApi.put(`/${id}`, projectData);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Erreur lors de la mise à jour du projet: ${error.message}`);
+  }
+};
