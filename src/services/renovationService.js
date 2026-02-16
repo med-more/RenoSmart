@@ -64,3 +64,17 @@ export const deleteRenovationRequest = async(id) =>{
         throw new Error(`Erreur lors de la suppression de la demande: ${error.message}`);
     }
 };
+
+//notification n8n for every devis created
+export const notifyNewQuote = async(quoteData) => {
+      const n8nWebhookUrl = import.meta.env.VITE_N8N_QUOTE_WEBHOOK_URL;
+      if (n8nWebhookUrl) {
+        try {
+            console.log('Notification n8n envoyée pour le nouveau devis:', quoteData);
+            const response = await axios.post(n8nWebhookUrl, quoteData);
+            console.log('Réponse n8n:', response.data);
+        } catch (error) {
+            console.error('Erreur notification n8n:', error);
+        }
+      }
+};
