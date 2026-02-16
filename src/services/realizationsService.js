@@ -51,3 +51,12 @@ export const updateRealization = async (id, projectData) => {
     throw new Error(`Erreur lors de la mise à jour du projet: ${error.message}`);
   }
 };
+
+export const deleteRealization = async (id) =>{
+  try {
+    const response = await realizationsApi.delete(`/${id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Erreur lors de la suppression du projet: ${error.message}`);
+  }
+};
