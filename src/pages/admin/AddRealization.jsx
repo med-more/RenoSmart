@@ -27,6 +27,14 @@ const AddRealization = () => {
 
   const [imagePreviews, setImagePreviews] = useState([]);
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
   return (
     <div>AddRealization</div>
   )
