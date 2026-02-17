@@ -109,6 +109,14 @@ const AddRealization = () => {
     });
   };
 
+  const removeImage = (index) => {
+    setImagePreviews(prev => prev.filter((_, i) => i !== index));
+    setFormData(prev => ({
+      ...prev,
+      images: prev.images.filter((_, i) => i !== index)
+    }));
+  };
+
   return (
     <div>AddRealization</div>
   )
