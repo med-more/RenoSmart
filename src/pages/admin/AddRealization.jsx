@@ -117,6 +117,77 @@ const AddRealization = () => {
     }));
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    try {
+
+      const id = formData.title
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-|-$/g, '') + '-' + Date.now();
+
+
+        const mainImage = formData.images.length > 0 
+        ? formData.images[0] 
+        : 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
+
+      const projectData = {
+        id,
+        title: formData.title,
+        location: formData.location,
+        type: formData.type,
+        habitatType: formData.habitatType,
+        room: formData.room || '',
+        materials: formData.materials || '',
+        image: mainImage, 
+        images: formData.images, 
+        description: formData.description,
+        surface: formData.surface,
+        duration: formData.duration,
+        budget: formData.budget,
+        year: formData.year,
+        createdAt: new Date().toISOString(),
+      };
+
+      const loadingToast = toast.loading('Création du projet en cours...', {
+        style: {
+          borderRadius: '0.5rem 1.5rem 1.5rem 0.5rem',
+          border: '2px solid #FFA726',
+        },
+      });
+
+      await createRealization(projectData);
+      
+      toast.success('Projet créé avec succès !', {
+        id: loadingToast,
+        icon: '✅',
+        style: {
+          borderRadius: '0.5rem 1.5rem 1.5rem 0.5rem',
+          border: '2px solid #10B981',
+        },
+      });
+      
+      setSuccess(true);
+      
+
+      setTimeout(() => {
+        navigate('/admin/realizations');
+      }, 2000);
+    } catch (err) {
+      toast.error(err.message || 'Erreur lors de la création du projet', {
+        style: {
+          borderRadius: '0.5rem 1.5rem 1.5rem 0.5rem',
+          border: '2px solid #EF4444',
+        },
+      });
+      setError(err.message || 'Erreur lors de la création du projet');
+      setLoading(false);
+    }
+  };
+
   return (
     <div>AddRealization</div>
   )
