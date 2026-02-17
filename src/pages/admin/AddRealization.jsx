@@ -5,6 +5,12 @@ import toast from 'react-hot-toast';
 import { createRealization } from '../../services/realizationsService';
 
 const AddRealization = () => {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
+
+
   return (
     <div>AddRealization</div>
   )
