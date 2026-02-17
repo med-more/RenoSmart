@@ -7,10 +7,43 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies
 node_modules
+
+# Build
 dist
 dist-ssr
 *.local
+
+# Environment variables (IMPORTANT)
+.env
+.env.*
+!.env.example
+
+# Images
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.svg
+
+# Videos
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+
+# Tests
+test
+tests
+__tests__
+coverage
+*.test.js
+*.spec.js
+*.test.ts
+*.spec.ts
 
 # Editor directories and files
 .vscode/*
@@ -22,4 +55,4 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-.env
+
