@@ -10,6 +10,22 @@ const AddRealization = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
 
+  const [formData, setFormData] = useState({
+    title: '',
+    location: '',
+    type: 'Rénovation',
+    habitatType: 'maison',
+    room: '',
+    materials: '',
+    images: [],
+    description: '',
+    surface: '',
+    duration: '',
+    budget: '',
+    year: new Date().getFullYear().toString(),
+  });
+
+  const [imagePreviews, setImagePreviews] = useState([]);
 
   return (
     <div>AddRealization</div>
