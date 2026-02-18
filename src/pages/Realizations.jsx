@@ -55,8 +55,6 @@ const Realizations = () => {
             setLoading(true);
             try {
                 const apiRealizations = await fetchRealizations();
-               
-                
                 const allProjects = [...apiRealizations, ...mockProjects];
                 setAllRealizations(allProjects);
             } catch (error) {

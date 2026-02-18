@@ -25,7 +25,7 @@ body {
 input,
 textarea,
 select {
-  @apply text-sm rounded-lg border-gray-300 focus:border-teal-light focus:ring-1 focus:ring-teal-light bg-gray-50 transition-all duration-200;
+  @apply text-sm rounded-lg border-gray-300 focus:border-teal focus:ring-1 focus:ring-teal bg-gray-50 transition-all duration-200;
   padding: 0.5rem 0.75rem !important;
   /* py-2 px-3 */
 }
@@ -87,7 +87,7 @@ label {
 }
 
 .card-service:hover {
-  @apply shadow-md border-teal-light/20;
+  @apply shadow-md border-teal/20;
   transform: translateY(-4px);
 }
 

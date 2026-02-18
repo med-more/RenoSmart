@@ -17,7 +17,7 @@ const AddRealization = () => {
     habitatType: 'maison',
     room: '',
     materials: '',
-    images: [],
+    images: [], 
     description: '',
     surface: '',
     duration: '',
@@ -40,7 +40,6 @@ const AddRealization = () => {
     
     if (files.length === 0) return;
 
-
     const totalImages = formData.images.length + files.length;
     if (totalImages > 10) {
       toast.error('Vous ne pouvez pas ajouter plus de 10 images', {
@@ -53,12 +52,10 @@ const AddRealization = () => {
       return;
     }
 
-
     const newPreviews = [];
     const newImages = [];
 
     files.forEach((file) => {
-
       if (!file.type.startsWith('image/')) {
         toast.error('Veuillez sélectionner uniquement des fichiers image', {
           style: {
@@ -69,7 +66,6 @@ const AddRealization = () => {
         setError('Veuillez sélectionner uniquement des fichiers image');
         return;
       }
-
 
       if (file.size > 5 * 1024 * 1024) {
         toast.error('Les images ne doivent pas dépasser 5MB', {
@@ -87,7 +83,6 @@ const AddRealization = () => {
         newPreviews.push(reader.result);
         newImages.push(reader.result);
 
-
         if (newPreviews.length === files.length) {
           setImagePreviews(prev => [...prev, ...newPreviews]);
           setFormData(prev => ({
@@ -95,7 +90,6 @@ const AddRealization = () => {
             images: [...prev.images, ...newImages]
           }));
           setError(''); 
-          
           toast.success(`${files.length} image${files.length > 1 ? 's' : ''} ajoutée${files.length > 1 ? 's' : ''}`, {
             style: {
               borderRadius: '0.5rem 1.5rem 1.5rem 0.5rem',
@@ -123,14 +117,12 @@ const AddRealization = () => {
     setLoading(true);
 
     try {
-
       const id = formData.title
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/^-|-$/g, '') + '-' + Date.now();
 
-
-        const mainImage = formData.images.length > 0 
+      const mainImage = formData.images.length > 0 
         ? formData.images[0] 
         : 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
 
@@ -172,7 +164,6 @@ const AddRealization = () => {
       
       setSuccess(true);
       
-
       setTimeout(() => {
         navigate('/admin/realizations');
       }, 2000);
@@ -190,12 +181,10 @@ const AddRealization = () => {
 
   return (
     <div className="space-y-6">
-
       <div>
         <h1 className="text-3xl font-bold text-gray-900">Ajouter un projet réalisé</h1>
         <p className="text-gray-600 mt-1">Créez un nouveau projet à afficher dans la section réalisations</p>
       </div>
-
 
       {success && (
         <motion.div
@@ -215,7 +204,6 @@ const AddRealization = () => {
         </motion.div>
       )}
 
-
       {error && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}
@@ -231,7 +219,6 @@ const AddRealization = () => {
         </motion.div>
       )}
 
-      {/* Form */}
       <motion.form
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -508,7 +495,7 @@ const AddRealization = () => {
         </div>
       </motion.form>
     </div>
-  )
-}
+  );
+};
 
-export default AddRealization
+export default AddRealization;

@@ -870,7 +870,6 @@ const RealizationDetail = () => {
         try {
           const apiData = await fetchRealizationById(id);
           if (apiData) {
-          
             const imagesArray = apiData.images && Array.isArray(apiData.images) && apiData.images.length > 0
               ? apiData.images
               : apiData.image
@@ -915,7 +914,9 @@ const RealizationDetail = () => {
           }
         } catch (apiError) {
           console.warn('Erreur lors du chargement depuis l\'API:', apiError);
+
         }
+
 
         const staticData = realizationsData[id];
         if (staticData) {

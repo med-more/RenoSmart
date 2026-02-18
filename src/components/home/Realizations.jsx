@@ -125,7 +125,6 @@ const Realizations = () => {
                 </div>
             </section>
 
-            {/* Modal Popup */}
             <AnimatePresence>
                 {selectedRealization && (
                     <>

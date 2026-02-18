@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
 import { fetchRealizationById, updateRealization } from '../../services/realizationsService';
 
-
 const EditProjectModal = ({ isOpen, onClose, projectId, onUpdate }) => {
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(false);
@@ -26,7 +25,7 @@ const EditProjectModal = ({ isOpen, onClose, projectId, onUpdate }) => {
 
   const [imagePreviews, setImagePreviews] = useState([]);
   const [existingImages, setExistingImages] = useState([]);
-  const [mockApiId, setMockApiId] = useState(null);
+  const [mockApiId, setMockApiId] = useState(null); 
 
   useEffect(() => {
     if (isOpen && projectId) {
@@ -53,7 +52,7 @@ const EditProjectModal = ({ isOpen, onClose, projectId, onUpdate }) => {
     }
   }, [isOpen, projectId]);
 
-    const loadProjectData = async () => {
+  const loadProjectData = async () => {
     setFetching(true);
     setError('');
     try {
@@ -62,8 +61,6 @@ const EditProjectModal = ({ isOpen, onClose, projectId, onUpdate }) => {
       if (!project) {
         throw new Error('Projet non trouvé');
       }
-      
-      
       let numericId = null;
       
       if (project.id && typeof project.id === 'number') {
@@ -283,10 +280,10 @@ const EditProjectModal = ({ isOpen, onClose, projectId, onUpdate }) => {
   };
 
   if (!isOpen) return null;
+
   return (
     <AnimatePresence>
       <div className="fixed inset-0 z-50 overflow-y-auto">
-
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -294,7 +291,6 @@ const EditProjectModal = ({ isOpen, onClose, projectId, onUpdate }) => {
           onClick={onClose}
           className="fixed inset-0 bg-black bg-opacity-50"
         />
-
 
         <div className="flex min-h-screen items-center justify-center p-4">
           <motion.div
@@ -304,7 +300,6 @@ const EditProjectModal = ({ isOpen, onClose, projectId, onUpdate }) => {
             onClick={(e) => e.stopPropagation()}
             className="relative bg-white rounded-asymmetric shadow-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto"
           >
-
             <div className="sticky top-0 bg-white border-b-2 border-gray-200 px-6 py-4 flex items-center justify-between z-10">
               <div>
                 <h2 className="text-2xl font-bold text-gray-900">Modifier le projet</h2>
@@ -320,7 +315,6 @@ const EditProjectModal = ({ isOpen, onClose, projectId, onUpdate }) => {
               </button>
             </div>
 
-
             <div className="p-6">
               {fetching ? (
                 <div className="flex items-center justify-center py-12">
@@ -328,7 +322,6 @@ const EditProjectModal = ({ isOpen, onClose, projectId, onUpdate }) => {
                 </div>
               ) : (
                 <>
-
                   {error && (
                     <motion.div
                       initial={{ opacity: 0, y: -10 }}
@@ -344,10 +337,8 @@ const EditProjectModal = ({ isOpen, onClose, projectId, onUpdate }) => {
                     </motion.div>
                   )}
 
-
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
                       <div className="md:col-span-2">
                         <label className="block text-sm font-bold text-gray-700 mb-2">
                           Titre du projet *
@@ -363,7 +354,6 @@ const EditProjectModal = ({ isOpen, onClose, projectId, onUpdate }) => {
                         />
                       </div>
 
-
                       <div>
                         <label className="block text-sm font-bold text-gray-700 mb-2">
                           Localisation *
@@ -378,7 +368,6 @@ const EditProjectModal = ({ isOpen, onClose, projectId, onUpdate }) => {
                           placeholder="Ex: Rabat, Maroc"
                         />
                       </div>
-
 
                       <div>
                         <label className="block text-sm font-bold text-gray-700 mb-2">
@@ -397,7 +386,6 @@ const EditProjectModal = ({ isOpen, onClose, projectId, onUpdate }) => {
                         </select>
                       </div>
 
-
                       <div>
                         <label className="block text-sm font-bold text-gray-700 mb-2">
                           Type d'habitat *
@@ -414,7 +402,6 @@ const EditProjectModal = ({ isOpen, onClose, projectId, onUpdate }) => {
                           <option value="villa">Villa</option>
                         </select>
                       </div>
-
 
                       <div>
                         <label className="block text-sm font-bold text-gray-700 mb-2">
@@ -434,7 +421,6 @@ const EditProjectModal = ({ isOpen, onClose, projectId, onUpdate }) => {
                         </select>
                       </div>
 
-
                       <div>
                         <label className="block text-sm font-bold text-gray-700 mb-2">
                           Matériaux (optionnel)
@@ -453,13 +439,11 @@ const EditProjectModal = ({ isOpen, onClose, projectId, onUpdate }) => {
                         </select>
                       </div>
 
-
                       <div className="md:col-span-2">
                         <label className="block text-sm font-bold text-gray-700 mb-2">
                           Images du projet
                         </label>
                         
-
                         <div className="mb-4">
                           <input
                             type="file"
@@ -482,7 +466,6 @@ const EditProjectModal = ({ isOpen, onClose, projectId, onUpdate }) => {
                             Vous pouvez ajouter de nouvelles images (max 10 au total, 5MB par image)
                           </p>
                         </div>
-
 
                         {imagePreviews.length > 0 && (
                           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
@@ -516,7 +499,6 @@ const EditProjectModal = ({ isOpen, onClose, projectId, onUpdate }) => {
                         )}
                       </div>
 
-
                       <div className="md:col-span-2">
                         <label className="block text-sm font-bold text-gray-700 mb-2">
                           Description
@@ -530,7 +512,6 @@ const EditProjectModal = ({ isOpen, onClose, projectId, onUpdate }) => {
                           placeholder="Description détaillée du projet..."
                         />
                       </div>
-
 
                       <div>
                         <label className="block text-sm font-bold text-gray-700 mb-2">
@@ -546,7 +527,6 @@ const EditProjectModal = ({ isOpen, onClose, projectId, onUpdate }) => {
                         />
                       </div>
 
-
                       <div>
                         <label className="block text-sm font-bold text-gray-700 mb-2">
                           Durée (optionnel)
@@ -560,7 +540,6 @@ const EditProjectModal = ({ isOpen, onClose, projectId, onUpdate }) => {
                           placeholder="Ex: 8 semaines"
                         />
                       </div>
-
 
                       <div>
                         <label className="block text-sm font-bold text-gray-700 mb-2">
@@ -576,7 +555,6 @@ const EditProjectModal = ({ isOpen, onClose, projectId, onUpdate }) => {
                         />
                       </div>
 
-
                       <div>
                         <label className="block text-sm font-bold text-gray-700 mb-2">
                           Année
@@ -591,7 +569,6 @@ const EditProjectModal = ({ isOpen, onClose, projectId, onUpdate }) => {
                         />
                       </div>
                     </div>
-
 
                     <div className="flex gap-4 pt-4 border-t-2 border-gray-200">
                       <button
@@ -617,7 +594,7 @@ const EditProjectModal = ({ isOpen, onClose, projectId, onUpdate }) => {
         </div>
       </div>
     </AnimatePresence>
-  )
-}
+  );
+};
 
-export default EditProjectModal
+export default EditProjectModal;
