@@ -1,10 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const Navbar = () => {
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
+
+
+  useEffect(() => {
+    const checkAuth = () => {
+      const auth = localStorage.getItem('adminAuthenticated');
+      setIsAdminAuthenticated(auth === 'true');
+    };
+
+    checkAuth();
+
+    const interval = setInterval(checkAuth, 1000);
+    
+    return () => clearInterval(interval);
+  }, []);
 
   const isActive = (path) => {
     if (path === '/') return location.pathname === '/';
@@ -63,11 +78,18 @@ const Navbar = () => {
                 </a>
               </div>
             </div>
-            <div className="flex items-center justify-end">
-              <Link to="/admin" className="hover:text-white transition-colors text-[10px] sm:text-[10px]">
-                Espace client
-              </Link>
-            </div>
+
+            {isAdminAuthenticated && (
+              <div className="flex items-center">
+                <Link
+                  to="/admin"
+                  className="hover:text-white transition-colors text-[10px] sm:text-xs"
+                  aria-label="Espace Admin"
+                >
+                  Espace Admin
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>

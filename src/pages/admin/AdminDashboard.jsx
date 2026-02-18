@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { getAllRenovationRequests } from '../../store/slices/renovationSlice';
 import { STATUS_LABELS, STATUS_COLORS } from '../../utils/constants';
-
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
@@ -38,6 +37,7 @@ const AdminDashboard = () => {
     return matchesSearch && matchesStatus && matchesDate;
   });
 
+
   const stats = {
     total: requests.length,
     pending: requests.filter((r) => r.status === 'Pending').length,
@@ -47,15 +47,18 @@ const AdminDashboard = () => {
     active: requests.filter((r) => ['In Review', 'Approved'].includes(r.status)).length,
   };
 
+
   const totalBudget = requests.reduce((sum, req) => {
     return sum + (req.estimatedBudget || req.budget || req.estimate?.budget || 0);
   }, 0);
+
 
   const workTypeStats = requests.reduce((acc, req) => {
     const type = req.workType || 'Autres';
     acc[type] = (acc[type] || 0) + 1;
     return acc;
   }, {});
+
 
   const last7Days = Array.from({ length: 7 }, (_, i) => {
     const date = new Date();
@@ -76,6 +79,7 @@ const AdminDashboard = () => {
   });
 
   const maxRequests = Math.max(...requestsByDay, 1);
+
 
   const calculateInsights = () => {
     const insights = [];
@@ -101,8 +105,10 @@ const AdminDashboard = () => {
         title: 'Attention',
         message: `L'activité a diminué. Pensez à relancer vos campagnes marketing.`
       });
+    }
 
-       if (stats.pending > 5) {
+
+    if (stats.pending > 5) {
       insights.push({
         type: 'info',
         icon: '⏰',
@@ -244,7 +250,7 @@ const AdminDashboard = () => {
       changeType: 'positive'
     }
   ];
-    }
+
   return (
     <div className="space-y-6">
 
@@ -489,7 +495,7 @@ const AdminDashboard = () => {
         </motion.div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AdminDashboard
+export default AdminDashboard;

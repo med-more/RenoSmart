@@ -2,7 +2,6 @@ import { Outlet } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Navbar from './Navbar';
 import Footer from './Footer';
-import Chatbot from '../chatbot/Chatbot';
 
 const MainLayout = ({ children }) => {
   const handlePhoneCall = () => {
@@ -16,7 +15,7 @@ const MainLayout = ({ children }) => {
         {children || <Outlet />}
       </main>
       <Footer />
-      <Chatbot />
+      
       
       <motion.button
         initial={{ scale: 0 }}

@@ -1,6 +1,6 @@
-import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainLayout from '../components/layout/MainLayout';
+
 
 import Home from '../pages/Home';
 import Services from '../pages/Services';
@@ -18,10 +18,12 @@ import Amenagement from '../pages/Amenagement';
 import Conseils from '../pages/Conseils';
 
 
-
 import AdminDashboard from '../pages/admin/AdminDashboard';
 import AdminRequests from '../pages/admin/AdminRequests';
 import RenovationDetails from '../pages/admin/RenovationDetails';
+import AdminRealizations from '../pages/admin/AdminRealizations';
+import AddRealization from '../pages/admin/AddRealization';
+import AdminLogin from '../pages/admin/AdminLogin';
 
 import AdminLayout from '../components/layout/AdminLayout';
 
@@ -48,10 +50,15 @@ const AppRoutes = () => {
         </Route>
 
 
+        <Route path="/admin/login" element={<AdminLogin />} />
+
+
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />
           <Route path="requests" element={<AdminRequests />} />
           <Route path="requests/:id" element={<RenovationDetails />} />
+          <Route path="realizations" element={<AdminRealizations />} />
+          <Route path="realizations/add" element={<AddRealization />} />
         </Route>
 
 
