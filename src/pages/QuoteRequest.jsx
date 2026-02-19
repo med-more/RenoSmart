@@ -99,6 +99,8 @@ const QuoteRequest = () => {
             residencyType: updatedFormData.residencyType,
             propertyType: updatedFormData.propertyType,
             surface: updatedFormData.surface || 0,
+            budget: updatedFormData.budget ? parseFloat(updatedFormData.budget) : null,
+            estimatedBudget: updatedFormData.budget ? parseFloat(updatedFormData.budget) : null,
             description: `[${updatedFormData.clientType}] Budget: ${updatedFormData.budget}. Délai: ${updatedFormData.timeframe}. Desc: ${updatedFormData.description}`,
             status: 'Pending',
             createdAt: new Date().toISOString(),

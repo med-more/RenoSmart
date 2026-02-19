@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { getAllRenovationRequests } from '../../store/slices/renovationSlice';
 import { STATUS_LABELS, STATUS_COLORS } from '../../utils/constants';
+import { generateDashboardInsights } from '../../services/aiService';
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
@@ -11,6 +12,9 @@ const AdminDashboard = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [dateFilter, setDateFilter] = useState('all');
+  const [aiInsights, setAiInsights] = useState([]);
+  const [insightsLoading, setInsightsLoading] = useState(false);
+  const [insightsError, setInsightsError] = useState(null);
 
   useEffect(() => {
     dispatch(getAllRenovationRequests());
@@ -60,36 +64,56 @@ const AdminDashboard = () => {
   }, {});
 
 
-  const last7Days = Array.from({ length: 7 }, (_, i) => {
+  const last7DaysData = Array.from({ length: 7 }, (_, i) => {
     const date = new Date();
     date.setDate(date.getDate() - (6 - i));
-    return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
-  });
-
-  const requestsByDay = last7Days.map((day) => {
-    const dayStart = new Date(day);
+    date.setHours(0, 0, 0, 0);
+    
+    const dayStart = new Date(date);
     dayStart.setHours(0, 0, 0, 0);
-    const dayEnd = new Date(day);
+    
+    const dayEnd = new Date(date);
     dayEnd.setHours(23, 59, 59, 999);
     
+    return {
+      date: date,
+      label: date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }),
+      dayStart: dayStart,
+      dayEnd: dayEnd,
+    };
+  });
+
+  const requestsByDay = last7DaysData.map((dayData) => {
     return requests.filter((req) => {
+      if (!req.createdAt) return false;
       const reqDate = new Date(req.createdAt);
-      return reqDate >= dayStart && reqDate <= dayEnd;
+      reqDate.setHours(0, 0, 0, 0);
+      return reqDate >= dayData.dayStart && reqDate <= dayData.dayEnd;
     }).length;
   });
 
+  const last7Days = last7DaysData.map(d => d.label);
+
   const maxRequests = Math.max(...requestsByDay, 1);
 
+  const recentDays = requestsByDay.slice(-3);
 
-  const calculateInsights = () => {
+  // Get latest requests sorted by date (newest first), independent of filters
+  const latestRequests = [...requests]
+    .sort((a, b) => {
+      const dateA = new Date(a.createdAt || 0);
+      const dateB = new Date(b.createdAt || 0);
+      return dateB - dateA; // Newest first
+    })
+    .slice(0, 5); // Get only the 5 most recent
+  const previousDays = requestsByDay.slice(0, 3);
+  const recentAvg = recentDays.reduce((a, b) => a + b, 0) / recentDays.length;
+  const previousAvg = previousDays.reduce((a, b) => a + b, 0) / previousDays.length;
+  const activityTrend = recentAvg > previousAvg ? 'augmentation' : recentAvg < previousAvg ? 'diminution' : 'stable';
+  const avgBudget = stats.total > 0 ? totalBudget / stats.total : 0;
+
+  const calculateFallbackInsights = () => {
     const insights = [];
-    
-
-    const recentDays = requestsByDay.slice(-3);
-    const previousDays = requestsByDay.slice(0, 3);
-    const recentAvg = recentDays.reduce((a, b) => a + b, 0) / recentDays.length;
-    const previousAvg = previousDays.reduce((a, b) => a + b, 0) / previousDays.length;
-    const activityTrend = recentAvg > previousAvg ? 'augmentation' : recentAvg < previousAvg ? 'diminution' : 'stable';
     
     if (activityTrend === 'augmentation') {
       insights.push({
@@ -107,7 +131,6 @@ const AdminDashboard = () => {
       });
     }
 
-
     if (stats.pending > 5) {
       insights.push({
         type: 'info',
@@ -116,7 +139,6 @@ const AdminDashboard = () => {
         message: `${stats.pending} demandes nécessitent votre attention. Priorisez les plus anciennes.`
       });
     }
-
 
     const topWorkType = Object.entries(workTypeStats).sort((a, b) => b[1] - a[1])[0];
     if (topWorkType && topWorkType[1] > 0) {
@@ -128,7 +150,6 @@ const AdminDashboard = () => {
         message: `"${topWorkType[0]}" représente ${percentage.toFixed(0)}% de vos demandes. C'est votre spécialité principale.`
       });
     }
-
 
     const approvalRate = stats.total > 0 ? (stats.approved / stats.total) * 100 : 0;
     if (approvalRate > 50) {
@@ -147,8 +168,6 @@ const AdminDashboard = () => {
       });
     }
 
-
-    const avgBudget = totalBudget / stats.total || 0;
     if (avgBudget > 30000) {
       insights.push({
         type: 'success',
@@ -161,8 +180,38 @@ const AdminDashboard = () => {
     return insights;
   };
 
+  useEffect(() => {
+    const fetchAIInsights = async () => {
+      if (requests.length === 0 || loading) return;
 
-  const displayInsights = calculateInsights();
+      setInsightsLoading(true);
+      setInsightsError(null);
+
+      try {
+        const dashboardData = {
+          stats,
+          totalBudget,
+          avgBudget,
+          workTypeStats,
+          requestsByDay,
+          activityTrend,
+        };
+
+        const insights = await generateDashboardInsights(dashboardData);
+        setAiInsights(insights);
+      } catch (error) {
+        console.error('Error generating AI insights:', error);
+        setInsightsError(error.message);
+        setAiInsights(calculateFallbackInsights());
+      } finally {
+        setInsightsLoading(false);
+      }
+    };
+
+    fetchAIInsights();
+  }, [requests.length, loading]);
+
+  const displayInsights = aiInsights.length > 0 ? aiInsights : calculateFallbackInsights();
 
   const statCards = [
     {
@@ -303,20 +352,31 @@ const AdminDashboard = () => {
           className="bg-white border-2 border-gray-200 rounded-asymmetric p-4 sm:p-6"
         >
           <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gray-100 rounded-asymmetric flex items-center justify-center flex-shrink-0">
-              <svg className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-teal to-teal-dark rounded-asymmetric flex items-center justify-center flex-shrink-0">
+              <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
               </svg>
             </div>
-            <div>
-              <h2 className="text-lg sm:text-xl font-bold text-gray-900">Insights</h2>
+            <div className="flex-1">
+              <div className="flex items-center gap-2">
+                <h2 className="text-lg sm:text-xl font-bold text-gray-900">Insights IA</h2>
+                {insightsLoading && (
+                  <div className="w-4 h-4 border-2 border-teal border-t-transparent rounded-full animate-spin" />
+                )}
+              </div>
               <p className="text-xs sm:text-sm text-gray-600">
-                Analyse de vos données
+                {insightsError ? 'Analyse basée sur des règles (IA indisponible)' : 'Analyse intelligente par Gemini AI'}
               </p>
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
-            {displayInsights.map((insight, index) => (
+          {insightsLoading ? (
+            <div className="flex flex-col items-center justify-center py-12">
+              <div className="w-12 h-12 border-4 border-teal border-t-transparent rounded-full animate-spin mb-4" />
+              <p className="text-sm text-gray-600">Génération des insights par l'IA...</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+              {displayInsights.map((insight, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, x: -20 }}
@@ -342,8 +402,9 @@ const AdminDashboard = () => {
                 </div>
               </div>
             </motion.div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </motion.div>
       )}
 
@@ -443,11 +504,11 @@ const AdminDashboard = () => {
                 <div className="w-8 h-8 border-4 border-orange border-t-transparent rounded-full animate-spin" />
                 <span className="text-xs sm:text-sm text-gray-500">Chargement...</span>
               </div>
-            ) : filteredRequests.length === 0 ? (
+            ) : latestRequests.length === 0 ? (
               <p className="text-sm text-gray-500">Aucune demande récente.</p>
             ) : (
               <ul className="space-y-3 max-h-64 overflow-y-auto">
-                {filteredRequests.slice(0, 5).map((req) => (
+                {latestRequests.map((req) => (
                   <li
                     key={req.id}
                     className="flex items-start justify-between gap-3 p-3 rounded-asymmetric bg-gray-50 hover:bg-gray-100 transition-colors"

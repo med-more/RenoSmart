@@ -11,9 +11,20 @@ const AdminRealizations = () => {
   const [error, setError] = useState('');
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   useEffect(() => {
     loadRealizations();
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+      setCurrentPage(1);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const loadRealizations = async () => {
@@ -21,7 +32,18 @@ const AdminRealizations = () => {
     setError('');
     try {
       const data = await fetchRealizations();
-      setRealizations(data);
+      const sortedData = [...data].sort((a, b) => {
+        if (a.createdAt && b.createdAt) {
+          return new Date(b.createdAt) - new Date(a.createdAt);
+        }
+        if (a.createdAt) return -1; 
+        if (b.createdAt) return 1;  
+        
+        const idA = typeof a.id === 'number' ? a.id : parseInt(a.id) || 0;
+        const idB = typeof b.id === 'number' ? b.id : parseInt(b.id) || 0;
+        return idB - idA; 
+      });
+      setRealizations(sortedData);
     } catch (err) {
       setError(err.message || 'Erreur lors du chargement des projets');
     } finally {
@@ -137,8 +159,24 @@ const AdminRealizations = () => {
           </Link>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {realizations.map((project, index) => (
+        <>
+          {realizations.length > 0 && (
+            <div className="flex items-center justify-between text-sm text-gray-600">
+              <p>
+                {realizations.length} projet{realizations.length > 1 ? 's' : ''} au total
+              </p>
+            </div>
+          )}
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {(() => {
+              const itemsPerPage = isMobile ? 6 : 9;
+              const totalPages = Math.ceil(realizations.length / itemsPerPage);
+              const startIndex = (currentPage - 1) * itemsPerPage;
+              const endIndex = startIndex + itemsPerPage;
+              const paginatedRealizations = realizations.slice(startIndex, endIndex);
+
+              return paginatedRealizations.map((project, index) => (
             <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 20 }}
@@ -183,8 +221,71 @@ const AdminRealizations = () => {
                 </div>
               </div>
             </motion.div>
-          ))}
-        </div>
+              ));
+            })()}
+          </div>
+
+          {(() => {
+            const itemsPerPage = isMobile ? 6 : 9;
+            const totalPages = Math.ceil(realizations.length / itemsPerPage);
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+
+            if (totalPages <= 1) return null;
+
+            return (
+              <div className="px-4 sm:px-6 py-3 sm:py-4 border-t-2 border-gray-200 bg-gray-50 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 rounded-asymmetric">
+                <div className="text-xs sm:text-sm text-gray-600">
+                  Affichage de {startIndex + 1} à {Math.min(endIndex, realizations.length)} sur {realizations.length} projet{realizations.length > 1 ? 's' : ''}
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                    disabled={currentPage === 1}
+                    className="px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    Précédent
+                  </button>
+                  <div className="flex items-center gap-1">
+                    {Array.from({ length: totalPages }, (_, i) => i + 1)
+                      .filter(page => {
+                        if (page === 1 || page === totalPages) return true;
+                        if (page >= currentPage - 1 && page <= currentPage + 1) return true;
+                        return false;
+                      })
+                      .map((page, index, array) => {
+                        const showEllipsisBefore = index > 0 && array[index] - array[index - 1] > 1;
+                        return (
+                          <React.Fragment key={page}>
+                            {showEllipsisBefore && (
+                              <span className="px-2 text-xs sm:text-sm text-gray-500">...</span>
+                            )}
+                            <button
+                              onClick={() => setCurrentPage(page)}
+                              className={`px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-medium rounded-lg transition-colors ${
+                                currentPage === page
+                                  ? 'bg-orange text-white'
+                                  : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+                              }`}
+                            >
+                              {page}
+                            </button>
+                          </React.Fragment>
+                        );
+                      })}
+                  </div>
+                  <button
+                    onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                    disabled={currentPage === totalPages}
+                    className="px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    Suivant
+                  </button>
+                </div>
+              </div>
+            );
+          })()}
+        </>
       )}
 
 

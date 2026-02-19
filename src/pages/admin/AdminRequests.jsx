@@ -244,9 +244,21 @@ const AdminRequests = () => {
                   <span className="truncate">{req.workType || 'Type inconnu'}</span>
                   <span>
                     {req.surface ? `${req.surface} m²` : ''}
-                    {(req.estimatedBudget || req.budget || req.estimate?.budget) 
-                      ? ` • ${(req.estimatedBudget || req.budget || req.estimate?.budget || 0).toLocaleString()} €` 
-                      : ''}
+                    {(() => {
+                      let budget = req.estimatedBudget ?? req.budget ?? req.estimate?.budget;
+                      
+                      if (!budget && req.description) {
+                        const budgetMatch = req.description.match(/Budget:\s*([0-9,.\s]+)/i);
+                        if (budgetMatch) {
+                          budget = budgetMatch[1].replace(/[,\s]/g, '');
+                        }
+                      }
+                      
+                      const budgetValue = budget !== null && budget !== undefined && budget !== '' ? Number(budget) : null;
+                      return budgetValue !== null && !isNaN(budgetValue) && budgetValue > 0 
+                        ? ` • ${budgetValue.toLocaleString('fr-FR')} €` 
+                        : '';
+                    })()}
                   </span>
                 </div>
                 <div className="flex items-center justify-between gap-2 text-[11px] text-gray-500">
@@ -359,9 +371,21 @@ const AdminRequests = () => {
                     </td>
                         <td className="px-3 sm:px-6 py-3 sm:py-4">
                       <div className="text-xs sm:text-sm font-bold text-gray-900">
-                        {(req.estimatedBudget || req.budget || req.estimate?.budget) 
-                          ? `${(req.estimatedBudget || req.budget || req.estimate?.budget || 0).toLocaleString()} €` 
-                          : 'N/A'}
+                        {(() => {
+                          let budget = req.estimatedBudget ?? req.budget ?? req.estimate?.budget;
+                          
+                          if (!budget && req.description) {
+                            const budgetMatch = req.description.match(/Budget:\s*([0-9,.\s]+)/i);
+                            if (budgetMatch) {
+                              budget = budgetMatch[1].replace(/[,\s]/g, '');
+                            }
+                          }
+                          
+                          const budgetValue = budget !== null && budget !== undefined && budget !== '' ? Number(budget) : null;
+                          return budgetValue !== null && !isNaN(budgetValue) && budgetValue > 0 
+                            ? `${budgetValue.toLocaleString('fr-FR')} €` 
+                            : 'N/A';
+                        })()}
                       </div>
                     </td>
                     <td className="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-600 whitespace-nowrap">
