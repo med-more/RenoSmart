@@ -20,13 +20,13 @@ dist-ssr
 .env.*
 !.env.example
 
-# Images
-*.png
-*.jpg
-*.jpeg
-*.gif
-*.webp
-*.svg
+# Images (uncomment to ignore - images must be committed for Vercel build)
+# *.png
+# *.jpg
+# *.jpeg
+# *.gif
+# *.webp
+# *.svg
 
 # Videos
 *.mp4
