@@ -1,7 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import img3 from '../public/3.png';
+
+const img3 = '/3.png';
 
 const Renovation = () => {
   return (

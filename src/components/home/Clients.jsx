@@ -1,12 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import alOmran from '../../public/alOmran.png';
-import mt from '../../public/mt.png';
-import onee from '../../public/onee.png';
-import onhym from '../../public/onhym.png';
-import orange from '../../public/orange.png';
-import rabat from '../../public/rabat.png';
-import RP from '../../public/RP.png';
+const alOmran = '/alOmran.png';
+const mt = '/mt.png';
+const onee = '/onee.png';
+const onhym = '/onhym.png';
+const orange = '/orange.png';
+const rabat = '/rabat.png';
+const RP = '/RP.png';
 
 const Clients = () => {
     const clients = [

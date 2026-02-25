@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import img1 from '../../public/1.png';
-import img2 from '../../public/2.png';
-import img3 from '../../public/3.png';
+const img1 = '/1.png';
+const img2 = '/2.png';
+const img3 = '/3.png';
 
 const NewsSection = () => {
     const [selectedArticle, setSelectedArticle] = useState(null);

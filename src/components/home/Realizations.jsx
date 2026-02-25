@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import img1 from '../../public/1.png';
+const img1 = '/1.png';
 
 const Realizations = () => {
     const [selectedRealization, setSelectedRealization] = useState(null);

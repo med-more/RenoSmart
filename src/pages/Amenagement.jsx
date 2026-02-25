@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import img2 from '../public/2.png';
-import img3 from '../public/3.png';
-import img4 from '../public/4.png';
+const img2 = '/2.png';
+const img3 = '/3.png';
+const img4 = '/4.png';
 
 const Amenagement = () => {
   const [selectedImage, setSelectedImage] = useState(null);

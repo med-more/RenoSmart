@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import aboutImage from '../assets/images/about.png';
-import constructionImage from '../assets/images/Construction de Bâtiments.png';
-import genieCivilImage from '../assets/images/Génie Civil & VRD.png';
-import renovationImage from '../assets/images/Rénovation Tous Bâtiments.png';
-import terrassementImage from '../assets/images/Terrassement & Démolition.png';
-import plomberieImage from '../assets/images/Plomberie & Électricité.png';
+const aboutImage = '/images/about.png';
+const constructionImage = '/images/construction-batiments.png';
+const genieCivilImage = '/images/genie-civil-vrd.png';
+const renovationImage = '/images/renovation-batiments.png';
+const terrassementImage = '/images/terrassement-demolition.png';
+const plomberieImage = '/images/plomberie-electricite.png';
 
 const About = () => {
    const [currentTestimonial, setCurrentTestimonial] = useState(0);
