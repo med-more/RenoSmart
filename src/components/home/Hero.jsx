@@ -72,7 +72,7 @@ const Hero = () => {
                         style={{ zIndex: index === currentSlide ? 1 : 0 }}
                             >
                                 <motion.div
-                                    className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                                    className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-70"
                                     style={{
                                         backgroundImage: `url('${slide.fallbackImage}')`,
                                     }}
@@ -87,7 +87,7 @@ const Hero = () => {
                                     }}
                                 />
                                 <motion.div
-                                    className="absolute inset-0 w-full h-full overflow-hidden"
+                                    className="absolute inset-0 w-full h-full overflow-hidden opacity-70"
                                     animate={{
                                         scale: [1, 1.1],
                                     }}
@@ -116,7 +116,7 @@ const Hero = () => {
                     ))}
             </div>
 
-            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30 z-5"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/70 to-black/55 z-5"></div>
 
             <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-8 flex flex-col justify-center">
                 <motion.div
