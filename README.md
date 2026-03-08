@@ -16,7 +16,6 @@ Application web front-end permettant aux clients de déposer une demande de devi
 - [Routes](#-routes)
 - [Tests](#-tests)
 - [Déploiement](#-déploiement)
-- [Documentation](#-documentation)
 - [Design](#-design)
 
 ---
@@ -236,16 +235,6 @@ Voir `docs/TESTS_README.md` pour la documentation détaillée des tests.
 - `VITE_GEMINI_API_KEY` : optionnel (insights IA)
 - `VITE_N8N_*_WEBHOOK_URL` : optionnel (automatisations)
 
----
-
-## Documentation
-
-| Document | Contenu |
-|----------|---------|
-| `docs/TECHNOLOGY_EXPLAINED.md` | React, Redux, Axios, Mock API, n8n, IA (Gemini) |
-| `docs/TESTS_README.md` | Tests : stack, commandes, exemples |
-| `docs/PRESENTATION_JURY_CANVA.md` | Plan de présentation jury |
-| `docs/PROMPT_GAMMA_PRESENTATION.md` | Prompt pour générer une présentation (Gamma) |
 
 ---
 
