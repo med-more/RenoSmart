@@ -1,12 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-const alOmran = '/alOmran.png';
-const mt = '/mt.png';
-const onee = '/onee.png';
-const onhym = '/onhym.png';
-const orange = '/orange.png';
-const rabat = '/rabat.png';
-const RP = '/RP.png';
+const alOmran = '/images/alOmran.png';
+const mt = '/images/mt.png';
+const onee = '/images/onee.png';
+const onhym = '/images/onhym.png';
+const orange = '/images/orange.png';
+const rabat = '/images/rabat.png';
+const RP = '/images/RP.png';
 
 const Clients = () => {
     const clients = [

@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
-const img3 = '/3.png';
+const img3 = '/images/3.png';
 
 const Renovation = () => {
   return (

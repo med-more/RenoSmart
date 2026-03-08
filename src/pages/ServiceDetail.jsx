@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-const img5 = '/5.png';
-const img6 = '/6.png';
+const img5 = '/images/5.png';
+const img6 = '/images/6.png';
 
 
 const servicesData = {

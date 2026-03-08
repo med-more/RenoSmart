@@ -1,7 +1,7 @@
 import React from 'react';
-const img2 = '/2.png';
-const img3 = '/3.png';
-const img4 = '/4.png';
+const img2 = '/images/2.png';
+const img3 = '/images/3.png';
+const img4 = '/images/4.png';
 const Inspirations = () => {
     return (
         <section className="py-16 bg-gray-50">

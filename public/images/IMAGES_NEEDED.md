@@ -1,7 +1,8 @@
 # Images requises pour le build Vercel
 
-Place les images suivantes dans ce dossier (`public/images/`) pour la page About :
+Place **toutes** les images suivantes dans ce dossier (`public/images/`) :
 
+**Page About :**
 - `about.png`
 - `construction-batiments.png`
 - `genie-civil-vrd.png`
@@ -9,8 +10,7 @@ Place les images suivantes dans ce dossier (`public/images/`) pour la page About
 - `terrassement-demolition.png`
 - `plomberie-electricite.png`
 
-Et à la racine de `public/` (dossier parent) :
-
+**Autres pages (galeries, logos, etc.) :**
 - `1.png`, `2.png`, `3.png`, `4.png`, `5.png`, `6.png`
 - `alOmran.png`, `mt.png`, `onee.png`, `onhym.png`, `orange.png`, `rabat.png`, `RP.png`
 

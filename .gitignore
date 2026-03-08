@@ -36,14 +36,7 @@ dist-ssr
 *.webm
 
 # Tests
-test
-tests
-__tests__
 coverage
-*.test.js
-*.spec.js
-*.test.ts
-*.spec.ts
 
 # Editor directories and files
 .vscode/*
