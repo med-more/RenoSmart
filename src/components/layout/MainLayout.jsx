@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import Chatbot from '../chatbot/Chatbot';
 
 const MainLayout = ({ children }) => {
   const handlePhoneCall = () => {
@@ -15,15 +16,16 @@ const MainLayout = ({ children }) => {
         {children || <Outlet />}
       </main>
       <Footer />
-      
-      
+
+      <Chatbot />
+
       <motion.button
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={handlePhoneCall}
-        className="sm:hidden fixed bottom-20 right-4 bg-teal text-white rounded-full w-14 h-14 shadow-lg flex items-center justify-center z-50 hover:bg-teal-dark transition-colors"
+        className="sm:hidden fixed bottom-4 right-4 bg-teal text-white rounded-full w-14 h-14 shadow-lg flex items-center justify-center z-50 hover:bg-teal-dark transition-colors"
         aria-label="Appeler"
       >
         <svg

@@ -45,7 +45,7 @@ const realizationsData = {
     projectManager: {
       name: 'JEAN-RAYMOND ACAP',
       phone: '06 87 58 69 25',
-      agency: 'Mon agence Camif Habitat Toulouse Sud-Est',
+      agency: 'RenoSmart Toulouse Sud-Est',
       photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80'
     },
     nearbyProjects: [
@@ -94,7 +94,7 @@ const realizationsData = {
     projectManager: {
       name: 'JEAN-RAYMOND ACAP',
       phone: '06 87 58 69 25',
-      agency: 'Mon agence Camif Habitat Normandie',
+      agency: 'RenoSmart Normandie',
       photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80'
     },
     nearbyProjects: [
@@ -144,7 +144,7 @@ const realizationsData = {
     projectManager: {
       name: 'JEAN-RAYMOND ACAP',
       phone: '06 87 58 69 25',
-      agency: 'Mon agence Camif Habitat Paris',
+      agency: 'RenoSmart Paris',
       photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80'
     },
     nearbyProjects: [
@@ -193,7 +193,7 @@ const realizationsData = {
     projectManager: {
       name: 'JEAN-RAYMOND ACAP',
       phone: '06 87 58 69 25',
-      agency: 'Mon agence Camif Habitat Île-de-France',
+      agency: 'RenoSmart Île-de-France',
       photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80'
     },
     nearbyProjects: [
@@ -242,7 +242,7 @@ const realizationsData = {
     projectManager: {
       name: 'JEAN-RAYMOND ACAP',
       phone: '06 87 58 69 25',
-      agency: 'Mon agence Camif Habitat Lyon',
+      agency: 'RenoSmart Lyon',
       photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80'
     },
     nearbyProjects: [
@@ -291,7 +291,7 @@ const realizationsData = {
     projectManager: {
       name: 'JEAN-RAYMOND ACAP',
       phone: '06 87 58 69 25',
-      agency: 'Mon agence Camif Habitat Toulouse',
+      agency: 'RenoSmart Toulouse',
       photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80'
     },
     nearbyProjects: [
@@ -341,7 +341,7 @@ const realizationsData = {
     projectManager: {
       name: 'JEAN-RAYMOND ACAP',
       phone: '06 87 58 69 25',
-      agency: 'Mon agence Camif Habitat Bordeaux',
+      agency: 'RenoSmart Bordeaux',
       photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80'
     },
     nearbyProjects: [
@@ -391,7 +391,7 @@ const realizationsData = {
     projectManager: {
       name: 'JEAN-RAYMOND ACAP',
       phone: '06 87 58 69 25',
-      agency: 'Mon agence Camif Habitat Nantes',
+      agency: 'RenoSmart Nantes',
       photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80'
     },
     nearbyProjects: [
@@ -441,7 +441,7 @@ const realizationsData = {
     projectManager: {
       name: 'JEAN-RAYMOND ACAP',
       phone: '06 87 58 69 25',
-      agency: 'Mon agence Camif Habitat Strasbourg',
+      agency: 'RenoSmart Strasbourg',
       photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80'
     },
     nearbyProjects: [
@@ -491,7 +491,7 @@ const realizationsData = {
     projectManager: {
       name: 'JEAN-RAYMOND ACAP',
       phone: '06 87 58 69 25',
-      agency: 'Mon agence Camif Habitat Marseille',
+      agency: 'RenoSmart Marseille',
       photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80'
     },
     nearbyProjects: [
@@ -541,7 +541,7 @@ const realizationsData = {
     projectManager: {
       name: 'JEAN-RAYMOND ACAP',
       phone: '06 87 58 69 25',
-      agency: 'Mon agence Camif Habitat Rennes',
+      agency: 'RenoSmart Rennes',
       photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80'
     },
     nearbyProjects: [
@@ -591,7 +591,7 @@ const realizationsData = {
     projectManager: {
       name: 'JEAN-RAYMOND ACAP',
       phone: '06 87 58 69 25',
-      agency: 'Mon agence Camif Habitat Lille',
+      agency: 'RenoSmart Lille',
       photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80'
     },
     nearbyProjects: [
@@ -641,7 +641,7 @@ const realizationsData = {
     projectManager: {
       name: 'JEAN-RAYMOND ACAP',
       phone: '06 87 58 69 25',
-      agency: 'Mon agence Camif Habitat Nice',
+      agency: 'RenoSmart Nice',
       photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80'
     },
     nearbyProjects: [
@@ -691,7 +691,7 @@ const realizationsData = {
     projectManager: {
       name: 'JEAN-RAYMOND ACAP',
       phone: '06 87 58 69 25',
-      agency: 'Mon agence Camif Habitat Toulouse',
+      agency: 'RenoSmart Toulouse',
       photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80'
     },
     nearbyProjects: [
@@ -741,7 +741,7 @@ const realizationsData = {
     projectManager: {
       name: 'JEAN-RAYMOND ACAP',
       phone: '06 87 58 69 25',
-      agency: 'Mon agence Camif Habitat Montpellier',
+      agency: 'RenoSmart Montpellier',
       photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80'
     },
     nearbyProjects: [
@@ -791,7 +791,7 @@ const realizationsData = {
     projectManager: {
       name: 'JEAN-RAYMOND ACAP',
       phone: '06 87 58 69 25',
-      agency: 'Mon agence Camif Habitat Grenoble',
+      agency: 'RenoSmart Grenoble',
       photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80'
     },
     nearbyProjects: [
@@ -841,7 +841,7 @@ const realizationsData = {
     projectManager: {
       name: 'JEAN-RAYMOND ACAP',
       phone: '06 87 58 69 25',
-      agency: 'Mon agence Camif Habitat Dijon',
+      agency: 'RenoSmart Dijon',
       photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80'
     },
     nearbyProjects: [
@@ -903,7 +903,7 @@ const RealizationDetail = () => {
               projectManager: {
                 name: 'JEAN-RAYMOND ACAP',
                 phone: '06 87 58 69 25',
-                agency: 'Mon agence Camif Habitat',
+                agency: 'RenoSmart',
                 photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80'
               },
               nearbyProjects: []

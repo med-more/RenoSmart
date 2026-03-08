@@ -43,7 +43,7 @@ const Home = () => {
       <section className="bg-white py-12 border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Logo_Camif_Habitat.svg/2560px-Logo_Camif_Habitat.svg.png" alt="Camif" className="h-8 grayscale opacity-50 hidden" />
+            <span className="text-teal font-bold text-lg">RenoSmart</span>
 
 
             <div className="bg-teal-darker rounded-xl p-8 w-full shadow-2xl relative overflow-hidden">

@@ -6,7 +6,7 @@ const VideoSection = () => {
         <section className="py-16 bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-12 relative inline-block">
-                    Pourquoi choisir Camif Habitat ?
+                    Pourquoi choisir RenoSmart ?
                     <span className="block h-1 w-20 bg-orange mx-auto mt-4 rounded-full"></span>
                 </h2>
 

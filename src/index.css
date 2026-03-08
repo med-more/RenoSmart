@@ -46,8 +46,7 @@ label {
   /* Simple radius */
 }
 
-/* Styles exacts Camif Habitat */
-/* Styles exacts Camif Habitat */
+/* Styles RenoSmart */
 .btn-orange {
   @apply bg-orange hover:bg-orange-dark text-white font-bold py-2 px-4 transition-colors shadow-xl text-sm uppercase tracking-wide rounded-asymmetric;
 }
@@ -137,7 +136,7 @@ label {
   @apply absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent;
 }
 
-/* Bouton avec sous-bouton imbriqué (style Camif Habitat) */
+/* Bouton avec sous-bouton imbriqué (style RenoSmart) */
 .btn-nested {
   @apply relative inline-block;
 }
