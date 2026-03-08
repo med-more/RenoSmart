@@ -8,6 +8,14 @@ const renovationImage = '/images/renovation-batiments.png';
 const terrassementImage = '/images/terrassement-demolition.png';
 const plomberieImage = '/images/plomberie-electricite.png';
 
+const PLACEHOLDER_IMAGES = {
+  construction: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+  genieCivil: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+  renovation: 'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+  terrassement: 'https://images.unsplash.com/photo-1581092160607-ee22621ddb7a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+  plomberie: 'https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+};
+
 const About = () => {
    const [currentTestimonial, setCurrentTestimonial] = useState(0);
    const [selectedService, setSelectedService] = useState(null);
@@ -44,6 +52,7 @@ const About = () => {
          title: 'Construction de Bâtiments',
          description: 'Construction de bâtiments résidentiels, commerciaux et industriels. Villas, maisons, immeubles, bureaux.',
          image: constructionImage,
+         fallback: PLACEHOLDER_IMAGES.construction,
          items: ['Construction neuve', 'Travaux d\'agrandissement', 'Maçonnerie générale'],
          fullDescription: 'RenoSmart est votre spécialiste en construction de bâtiments à Rabat, Témara et dans toute la région Rabat-Salé-Kénitra. Nous construisons des villas modernes et traditionnelles, des maisons individuelles, des immeubles résidentiels et des bâtiments commerciaux selon vos besoins.',
          buildingTypes: [
@@ -92,6 +101,7 @@ const About = () => {
          title: 'Génie Civil & VRD',
          description: 'Travaux de génie civil, voirie et réseaux divers. Aménagements extérieurs, assainissement.',
          image: genieCivilImage,
+         fallback: PLACEHOLDER_IMAGES.genieCivil,
          items: ['VRD', 'Terrassement', 'Assainissement'],
          fullDescription: 'Expert en génie civil et VRD (Voirie et Réseaux Divers), RenoSmart réalise tous vos projets d\'infrastructure : routes, réseaux d\'eau, assainissement, aménagements urbains.',
          buildingTypes: [
@@ -140,6 +150,7 @@ const About = () => {
          title: 'Rénovation Tous Bâtiments',
          description: 'Rénovation complète ou partielle de tous types de bâtiments. Appartements, maisons, bureaux, locaux commerciaux.',
          image: renovationImage,
+         fallback: PLACEHOLDER_IMAGES.renovation,
          items: ['Rénovation intérieure', 'Rénovation énergétique', 'Aménagements extérieurs'],
          fullDescription: 'RenoSmart transforme et modernise tous types de bâtiments : appartements, maisons, bureaux et locaux commerciaux. Rénovation complète ou partielle selon vos besoins.',
          buildingTypes: [
@@ -188,6 +199,7 @@ const About = () => {
          title: 'Terrassement & Démolition',
          description: 'Travaux de terrassement, nivellement de terrain, démolition de structures existantes. Préparation de chantier.',
          image: terrassementImage,
+         fallback: PLACEHOLDER_IMAGES.terrassement,
          items: ['Terrassement', 'Démolition', 'Évacuation'],
          fullDescription: 'RenoSmart réalise tous vos travaux de terrassement et de démolition. Préparation de terrain, nivellement, démolition sélective ou totale, évacuation des déchets.',
          buildingTypes: [
@@ -236,6 +248,7 @@ const About = () => {
          title: 'Plomberie & Électricité',
          description: 'Installation, réparation et maintenance des systèmes de plomberie et d\'électricité. Neuf et rénovation.',
          image: plomberieImage,
+         fallback: PLACEHOLDER_IMAGES.plomberie,
          items: ['Plomberie', 'Électricité', 'Dépannage urgent'],
          fullDescription: 'RenoSmart assure l\'installation, la réparation et la maintenance de tous vos systèmes de plomberie et d\'électricité. Intervention rapide pour dépannage urgent.',
          buildingTypes: [
@@ -412,11 +425,16 @@ const About = () => {
                         viewport={{ once: true }}
                         className="bg-white rounded-asymmetric shadow-card overflow-hidden"
                      >
-                        <div className="relative h-32 sm:h-48 overflow-hidden">
+                        <div className="relative h-32 sm:h-48 overflow-hidden bg-gray-200">
                            <img
                               src={service.image}
                               alt={service.title}
                               className="w-full h-full object-cover"
+                              onError={(e) => {
+                                 if (service.fallback && e.target.src !== service.fallback) {
+                                    e.target.src = service.fallback;
+                                 }
+                              }}
                            />
                         </div>
                         <div className="p-3 sm:p-6">
