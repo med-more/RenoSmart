@@ -393,11 +393,17 @@ const AdminDashboard = () => {
                   <span className="text-base sm:text-lg">{insight.icon}</span>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-sm sm:text-base font-bold text-gray-900 mb-1">
+                  <h3 className="text-sm sm:text-base font-bold text-gray-900 mb-1.5">
                     {insight.title}
                   </h3>
                   <p className="text-xs sm:text-sm text-gray-700 leading-relaxed break-words">
-                    {insight.message}
+                    {insight.message.split(/(Recommandations?\s*:?)/gi).map((part, i) =>
+                      /Recommandations?\s*:?/i.test(part) ? (
+                        <strong key={i} className="font-bold text-gray-900">{part}</strong>
+                      ) : (
+                        <span key={i}>{part}</span>
+                      )
+                    )}
                   </p>
                 </div>
               </div>
