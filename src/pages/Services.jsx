@@ -39,11 +39,22 @@ const services = [
 
 const Services = () => {
     return (
-        <section className="py-20 relative bg-white">
+        <div className="bg-white min-h-screen">
+            {/* Breadcrumbs – juste sous la navbar */}
+            <div className="bg-gray-50 py-4 border-b border-gray-200">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <nav className="flex items-center text-sm text-gray-600">
+                        <Link to="/" className="hover:text-orange transition-colors">Accueil</Link>
+                        <span className="mx-2">/</span>
+                        <span className="text-gray-900 font-medium">Nos services</span>
+                    </nav>
+                </div>
+            </div>
 
-            <div className="absolute top-0 left-0 w-1/3 h-full bg-gray-50 -skew-x-12 -z-10 opacity-50"></div>
+            <section className="py-12 sm:py-16 md:py-20 relative bg-white">
+                <div className="absolute top-0 left-0 w-1/3 h-full bg-gray-50 -skew-x-12 -z-10 opacity-50"></div>
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-16">
                     <div className="max-w-xl">
                         <span className="text-orange font-bold tracking-widest text-sm uppercase mb-2 block">Nos expertises</span>
@@ -79,8 +90,9 @@ const Services = () => {
                         </motion.div>
                     ))}
                 </div>
-            </div>
-        </section>
+                </div>
+            </section>
+        </div>
     );
 };
 

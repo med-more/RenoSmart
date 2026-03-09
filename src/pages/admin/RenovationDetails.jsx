@@ -15,6 +15,32 @@ import { setSuccessMessage, clearMessages, setLoading, setError } from '../../st
 import { REQUEST_STATUSES, STATUS_LABELS, STATUS_COLORS } from '../../utils/constants';
 import { sendRequestDetailsEmail } from '../../services/renovationService';
 
+/** Parse la description format "[clientType] Budget: X. Délai: Y. Desc: Z" et retourne des champs lisibles. */
+const parseRequestDescription = (description) => {
+  if (!description || typeof description !== 'string') return null;
+  const clientTypeLabels = {
+    proprietaire: 'Propriétaire particulier',
+    acquereur: 'Futur acquéreur particulier',
+    pro: 'Professionnel',
+    renseignement: 'Je me renseigne',
+  };
+  const timeframeLabels = {
+    asap: 'Dès que possible',
+    '3_months': 'Dans les 3 mois',
+    '6_months': 'Dans les 6 mois',
+    project: "C'est juste un projet",
+  };
+  const match = description.match(/\[([^\]]*)\]\s*Budget:\s*(.+?)\.\s*Délai:\s*(.+?)\.\s*Desc:\s*(.*)/s);
+  if (!match) return null;
+  const [, clientType, budget, timeframe, desc] = match;
+  return {
+    clientType: clientTypeLabels[clientType?.trim()] || clientType?.trim() || '—',
+    budget: (budget || '').trim() || '—',
+    timeframe: timeframeLabels[timeframe?.trim()] || timeframe?.trim() || '—',
+    description: (desc || '').trim() || '—',
+  };
+};
+
 
 
 const RenovationDetails = () => {
@@ -198,9 +224,36 @@ const RenovationDetails = () => {
               </div>
             </div>
             <div className="mt-4 sm:mt-5 md:mt-6">
-              <p className="text-xs sm:text-sm text-gray-500 font-medium uppercase tracking-wide mb-2">Description</p>
-              <div className="bg-gray-50 p-3 sm:p-4 rounded-lg text-xs sm:text-sm md:text-base text-gray-700 italic border border-gray-200 break-words">
-                "{currentRequest.description}"
+              <p className="text-xs sm:text-sm text-gray-500 font-medium uppercase tracking-wide mb-2">Détails de la demande</p>
+              <div className="bg-gray-50 p-3 sm:p-4 rounded-lg border border-gray-200 break-words">
+                {(() => {
+                  const parsed = parseRequestDescription(currentRequest.description);
+                  if (parsed) {
+                    return (
+                      <dl className="space-y-2 sm:space-y-3 text-xs sm:text-sm md:text-base">
+                        <div>
+                          <dt className="text-gray-500 font-medium uppercase tracking-wide mb-0.5">Profil client</dt>
+                          <dd className="text-gray-800">{parsed.clientType}</dd>
+                        </div>
+                        <div>
+                          <dt className="text-gray-500 font-medium uppercase tracking-wide mb-0.5">Budget</dt>
+                          <dd className="text-gray-800">{parsed.budget}</dd>
+                        </div>
+                        <div>
+                          <dt className="text-gray-500 font-medium uppercase tracking-wide mb-0.5">Délai souhaité</dt>
+                          <dd className="text-gray-800">{parsed.timeframe}</dd>
+                        </div>
+                        <div>
+                          <dt className="text-gray-500 font-medium uppercase tracking-wide mb-0.5">Message / description</dt>
+                          <dd className="text-gray-800 whitespace-pre-wrap">{parsed.description}</dd>
+                        </div>
+                      </dl>
+                    );
+                  }
+                  return (
+                    <p className="text-gray-700 italic">"{currentRequest.description}"</p>
+                  );
+                })()}
               </div>
             </div>
           </div>

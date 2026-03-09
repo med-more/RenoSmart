@@ -17,6 +17,26 @@ const STEPS = [
     { id: 'contact', label: 'Vos coordonnées' },
 ];
 
+/** Convertit le libellé budget (ex. "20 000 € - 50 000 €") en nombre pour l'API. */
+const getBudgetValueFromLabel = (label) => {
+    if (!label || typeof label !== 'string') return null;
+    const trimmed = label.trim();
+    if (!trimmed) return null;
+    const map = {
+        'Moins de 20 000 €': 10000,
+        '20 000 € - 50 000 €': 35000,
+        '50 000 € - 100 000 €': 75000,
+        'Plus de 100 000 €': 150000,
+    };
+    if (map[trimmed] != null) return map[trimmed];
+    const numbers = trimmed.match(/[\d\s]+/g);
+    if (numbers && numbers.length) {
+        const first = parseInt(numbers[0].replace(/\s/g, ''), 10);
+        if (!isNaN(first)) return first;
+    }
+    return null;
+};
+
 const QuoteRequest = () => {
     const dispatch = useDispatch();
     const [currentStep, setCurrentStep] = useState(0);
@@ -91,6 +111,8 @@ const QuoteRequest = () => {
       const updatedFormData = { ...formData, ...values };
 
 
+      const budgetLabel = updatedFormData.budget;
+      const budgetNumeric = getBudgetValueFromLabel(budgetLabel);
       const payload = {
             clientName: updatedFormData.clientName,
             email: updatedFormData.email,
@@ -99,9 +121,9 @@ const QuoteRequest = () => {
             residencyType: updatedFormData.residencyType,
             propertyType: updatedFormData.propertyType,
             surface: updatedFormData.surface || 0,
-            budget: updatedFormData.budget ? parseFloat(updatedFormData.budget) : null,
-            estimatedBudget: updatedFormData.budget ? parseFloat(updatedFormData.budget) : null,
-            description: `[${updatedFormData.clientType}] Budget: ${updatedFormData.budget}. Délai: ${updatedFormData.timeframe}. Desc: ${updatedFormData.description}`,
+            budget: budgetNumeric,
+            estimatedBudget: budgetNumeric,
+            description: `[${updatedFormData.clientType}] Budget: ${budgetLabel || ''}. Délai: ${updatedFormData.timeframe}. Desc: ${updatedFormData.description}`,
             status: 'Pending',
             createdAt: new Date().toISOString(),
         };
@@ -121,7 +143,7 @@ const QuoteRequest = () => {
                     email: updatedFormData.email,
                     phone: updatedFormData.phone || null,
                     workType: updatedFormData.workType.join(', '),
-                    estimatedBudget: updatedFormData.budget || null,
+                    estimatedBudget: budgetNumeric ?? updatedFormData.budget ?? null,
                     createdAt: new Date().toISOString(),
                 });
             } catch (n8nError) {

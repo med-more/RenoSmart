@@ -245,12 +245,20 @@ const AdminRequests = () => {
                   <span>
                     {req.surface ? `${req.surface} m²` : ''}
                     {(() => {
-                      let budget = req.estimatedBudget ?? req.budget ?? req.estimate?.budget;
+                      let budget = req.estimatedBudget ?? req.budget ?? req.estimate?.budget ?? req.estimated_budget;
                       
-                      if (!budget && req.description) {
-                        const budgetMatch = req.description.match(/Budget:\s*([0-9,.\s]+)/i);
+                      if ((budget === null || budget === undefined || budget === '') && req.description) {
+                        const budgetMatch = req.description.match(/Budget:\s*(.+?)(?:\.|$)/i);
                         if (budgetMatch) {
-                          budget = budgetMatch[1].replace(/[,\s]/g, '');
+                          const raw = budgetMatch[1].trim();
+                          if (/Moins de 20/i.test(raw)) budget = 10000;
+                          else if (/20\s*000.*50\s*000/i.test(raw)) budget = 35000;
+                          else if (/50\s*000.*100\s*000/i.test(raw)) budget = 75000;
+                          else if (/Plus de 100/i.test(raw)) budget = 150000;
+                          else {
+                            const firstNum = raw.match(/(\d[\d\s]*)/);
+                            if (firstNum) budget = parseInt(firstNum[1].replace(/\s/g, ''), 10);
+                          }
                         }
                       }
                       
@@ -372,12 +380,20 @@ const AdminRequests = () => {
                         <td className="px-3 sm:px-6 py-3 sm:py-4">
                       <div className="text-xs sm:text-sm font-bold text-gray-900">
                         {(() => {
-                          let budget = req.estimatedBudget ?? req.budget ?? req.estimate?.budget;
+                          let budget = req.estimatedBudget ?? req.budget ?? req.estimate?.budget ?? req.estimated_budget;
                           
-                          if (!budget && req.description) {
-                            const budgetMatch = req.description.match(/Budget:\s*([0-9,.\s]+)/i);
+                          if ((budget === null || budget === undefined || budget === '') && req.description) {
+                            const budgetMatch = req.description.match(/Budget:\s*(.+?)(?:\.|$)/i);
                             if (budgetMatch) {
-                              budget = budgetMatch[1].replace(/[,\s]/g, '');
+                              const raw = budgetMatch[1].trim();
+                              if (/Moins de 20/i.test(raw)) budget = 10000;
+                              else if (/20\s*000.*50\s*000/i.test(raw)) budget = 35000;
+                              else if (/50\s*000.*100\s*000/i.test(raw)) budget = 75000;
+                              else if (/Plus de 100/i.test(raw)) budget = 150000;
+                              else {
+                                const firstNum = raw.match(/(\d[\d\s]*)/);
+                                if (firstNum) budget = parseInt(firstNum[1].replace(/\s/g, ''), 10);
+                              }
                             }
                           }
                           
