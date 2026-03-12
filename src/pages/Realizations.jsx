@@ -4,39 +4,6 @@ import { motion } from 'framer-motion';
 import { fetchRealizations } from '../services/realizationsService';
 
 
-const mockProjects = [
-        { id: 'renovation-maison-ville-paris', title: 'Rénovation partielle d\'une maison', location: 'Chalon-sur-Saône (71)', type: 'Rénovation', habitatType: 'maison', room: 'salon', materials: 'bois', image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-        { id: 'extension-maison-normandie', title: 'Extension d\'une maison', location: 'Normandie (14)', type: 'Extension', habitatType: 'maison', room: '', materials: 'bois', image: 'https://images.unsplash.com/photo-1449844908441-8829872d2607?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-        { id: 'renovation-appartement-paris', title: 'Rénovation d\'un appartement', location: 'Paris (75)', type: 'Rénovation', habitatType: 'appartement', room: 'salon', materials: 'pierre', image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-        { id: 'amenagement-combles-ile-de-france', title: 'Aménagement de combles', location: 'Île-de-France (92)', type: 'Aménagement', habitatType: 'maison', room: 'chambre', materials: 'bois', image: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-        { id: 'renovation-salle-de-bain-lyon', title: 'Rénovation salle de bain', location: 'Lyon (69)', type: 'Rénovation', habitatType: 'appartement', room: 'salle-de-bain', materials: 'pierre', image: 'https://images.unsplash.com/photo-1552321901-711579f15733?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-        { id: 'cuisine-sur-mesure-toulouse', title: 'Cuisine sur mesure', location: 'Toulouse (31)', type: 'Aménagement', habitatType: 'maison', room: 'cuisine', materials: 'bois', image: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-        { id: 'renovation-maison-1', title: 'Rénovation complète d\'une maison', location: 'Bordeaux (33)', type: 'Rénovation', habitatType: 'maison', room: '', materials: 'bois', image: 'https://images.unsplash.com/photo-1600607687644-c7f32b3901b8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-        { id: 'extension-1', title: 'Extension avec véranda', location: 'Nantes (44)', type: 'Extension', habitatType: 'maison', room: 'salon', materials: 'metal', image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-        { id: 'renovation-2', title: 'Rénovation énergétique', location: 'Strasbourg (67)', type: 'Rénovation', habitatType: 'maison', room: '', materials: 'beton', image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-        { id: 'amenagement-1', title: 'Aménagement suite parentale', location: 'Marseille (13)', type: 'Aménagement', habitatType: 'maison', room: 'chambre', materials: 'bois', image: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-        { id: 'renovation-3', title: 'Rénovation d\'une longère', location: 'Rennes (35)', type: 'Rénovation', habitatType: 'maison', room: '', materials: 'pierre', image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-        { id: 'extension-2', title: 'Surélévation de maison', location: 'Lille (59)', type: 'Extension', habitatType: 'maison', room: '', materials: 'beton', image: 'https://images.unsplash.com/photo-1449844908441-8829872d2607?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-        { id: 'renovation-4', title: 'Rénovation intérieure complète', location: 'Nice (06)', type: 'Rénovation', habitatType: 'appartement', room: 'salon', materials: 'bois', image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-        { id: 'amenagement-2', title: 'Aménagement sous-sol', location: 'Toulouse (31)', type: 'Aménagement', habitatType: 'maison', room: '', materials: 'beton', image: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-        { id: 'renovation-5', title: 'Rénovation façade', location: 'Montpellier (34)', type: 'Rénovation', habitatType: 'maison', room: '', materials: 'pierre', image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-        { id: 'extension-3', title: 'Extension latérale', location: 'Grenoble (38)', type: 'Extension', habitatType: 'maison', room: '', materials: 'bois', image: 'https://images.unsplash.com/photo-1449844908441-8829872d2607?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-        { id: 'renovation-6', title: 'Rénovation toiture', location: 'Dijon (21)', type: 'Rénovation', habitatType: 'maison', room: '', materials: 'metal', image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-        { id: 'amenagement-3', title: 'Aménagement bureau', location: 'Angers (49)', type: 'Aménagement', habitatType: 'maison', room: '', materials: 'bois', image: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-        { id: 'renovation-7', title: 'Rénovation complète appartement', location: 'Reims (51)', type: 'Rénovation', habitatType: 'appartement', room: 'salon', materials: 'bois', image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-        { id: 'extension-4', title: 'Extension avec terrasse', location: 'Caen (14)', type: 'Extension', habitatType: 'maison', room: '', materials: 'beton', image: 'https://images.unsplash.com/photo-1449844908441-8829872d2607?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-        { id: 'renovation-8', title: 'Rénovation salle de bain moderne', location: 'Nancy (54)', type: 'Rénovation', habitatType: 'appartement', room: 'salle-de-bain', materials: 'pierre', image: 'https://images.unsplash.com/photo-1552321901-711579f15733?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-        { id: 'amenagement-4', title: 'Aménagement dressing', location: 'Tours (37)', type: 'Aménagement', habitatType: 'maison', room: 'chambre', materials: 'bois', image: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-        { id: 'renovation-9', title: 'Rénovation cuisine équipée', location: 'Clermont-Ferrand (63)', type: 'Rénovation', habitatType: 'maison', room: 'cuisine', materials: 'bois', image: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-        { id: 'extension-5', title: 'Extension avec piscine', location: 'Aix-en-Provence (13)', type: 'Extension', habitatType: 'villa', room: '', materials: 'beton', image: 'https://images.unsplash.com/photo-1449844908441-8829872d2607?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-        { id: 'renovation-10', title: 'Rénovation maison de ville', location: 'Amiens (80)', type: 'Rénovation', habitatType: 'maison', room: '', materials: 'pierre', image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-        { id: 'amenagement-5', title: 'Aménagement garage en bureau', location: 'Besançon (25)', type: 'Aménagement', habitatType: 'maison', room: '', materials: 'beton', image: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-        { id: 'renovation-11', title: 'Rénovation appartement haussmannien', location: 'Paris (75)', type: 'Rénovation', habitatType: 'appartement', room: 'salon', materials: 'pierre', image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-        { id: 'extension-6', title: 'Extension avec jardin d\'hiver', location: 'Lyon (69)', type: 'Extension', habitatType: 'maison', room: 'salon', materials: 'metal', image: 'https://images.unsplash.com/photo-1449844908441-8829872d2607?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-        { id: 'renovation-12', title: 'Rénovation complète villa', location: 'Cannes (06)', type: 'Rénovation', habitatType: 'villa', room: '', materials: 'pierre', image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' },
-        { id: 'amenagement-6', title: 'Aménagement grenier', location: 'Rouen (76)', type: 'Aménagement', habitatType: 'maison', room: 'chambre', materials: 'bois', image: 'https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' }
-];
-
 const Realizations = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [filters, setFilters] = useState({
@@ -55,12 +22,10 @@ const Realizations = () => {
             setLoading(true);
             try {
                 const apiRealizations = await fetchRealizations();
-                const allProjects = [...apiRealizations, ...mockProjects];
-                setAllRealizations(allProjects);
+                setAllRealizations(apiRealizations || []);
             } catch (error) {
                 console.error('Erreur lors du chargement des réalisations:', error);
-
-                setAllRealizations(mockProjects);
+                setAllRealizations([]);
             } finally {
                 setLoading(false);
             }
@@ -71,7 +36,7 @@ const Realizations = () => {
 
     const filteredRealizations = allRealizations.filter(realization => {
 
-      if (filters.city && !realization.location.toLowerCase().includes(filters.city.toLowerCase())) {
+      if (filters.city && !(realization.location || '').toLowerCase().includes(filters.city.toLowerCase())) {
             return false;
         }
 

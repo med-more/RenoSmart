@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useBlocker } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { addRenovationRequest } from '../store/slices/renovationSlice';
@@ -85,6 +85,38 @@ const QuoteRequest = () => {
     const updateData = (field, value) => {
         setFormData(prev => ({ ...prev, [field]: value }));
     };
+
+    const isFormDirty = useMemo(() => {
+        const d = formData;
+        return !!(
+            (d.clientType && d.clientType.trim()) ||
+            (d.propertyType && d.propertyType.trim()) ||
+            (d.residencyType && d.residencyType.trim()) ||
+            (Array.isArray(d.workType) && d.workType.length > 0) ||
+            (d.timeframe && d.timeframe.trim()) ||
+            (d.budget && d.budget.trim()) ||
+            (d.surface && String(d.surface).trim()) ||
+            (d.clientName && d.clientName.trim()) ||
+            (d.email && d.email.trim()) ||
+            (d.phone && d.phone.trim()) ||
+            (d.zipCode && d.zipCode.trim()) ||
+            (d.description && d.description.trim())
+        );
+    }, [formData]);
+
+    const blocker = useBlocker(
+        ({ currentLocation, nextLocation }) =>
+            !isSubmitted && isFormDirty && currentLocation.pathname !== nextLocation.pathname
+    );
+
+    useEffect(() => {
+        if (!isFormDirty || isSubmitted) return;
+        const handleBeforeUnload = (e) => {
+            e.preventDefault();
+        };
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+    }, [isFormDirty, isSubmitted]);
 
 
     const contactSchema = Yup.object().shape({
@@ -638,6 +670,48 @@ const QuoteRequest = () => {
 
     return (
         <div className="min-h-screen bg-gray-50 pb-12 sm:pb-16 md:pb-20">
+            {/* Modal quitter le devis */}
+            <AnimatePresence>
+                {blocker.state === 'blocked' && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
+                        onClick={() => blocker.reset()}
+                    >
+                        <motion.div
+                            initial={{ scale: 0.95, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.95, opacity: 0 }}
+                            onClick={(e) => e.stopPropagation()}
+                            className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6 sm:p-8 border border-gray-100"
+                        >
+                            <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">Quitter la demande de devis ?</h3>
+                            <p className="text-sm text-gray-600 mb-6">
+                                Vous avez commencé à remplir le formulaire. Souhaitez-vous continuer ou abandonner les modifications ?
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-3">
+                                <button
+                                    type="button"
+                                    onClick={() => blocker.reset()}
+                                    className="btn-orange flex-1 py-2.5 px-4"
+                                >
+                                    Continuer le devis
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => blocker.proceed()}
+                                    className="flex-1 py-2.5 px-4 rounded-asymmetric border-2 border-gray-300 text-gray-700 font-bold hover:bg-gray-50 transition-colors text-sm"
+                                >
+                                    Abandonner les modifications
+                                </button>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
             <div className="max-w-6xl mx-auto px-3 sm:px-4 md:px-6 pt-4 sm:pt-6 md:pt-8">
                 {isSubmitted ? renderSuccess() : (
                     <>

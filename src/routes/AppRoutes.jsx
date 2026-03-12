@@ -1,6 +1,5 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import MainLayout from '../components/layout/MainLayout';
-
 
 import Home from '../pages/Home';
 import Services from '../pages/Services';
@@ -17,7 +16,6 @@ import Extension from '../pages/Extension';
 import Amenagement from '../pages/Amenagement';
 import Conseils from '../pages/Conseils';
 
-
 import AdminDashboard from '../pages/admin/AdminDashboard';
 import AdminRequests from '../pages/admin/AdminRequests';
 import RenovationDetails from '../pages/admin/RenovationDetails';
@@ -27,60 +25,59 @@ import AdminLogin from '../pages/admin/AdminLogin';
 
 import AdminLayout from '../components/layout/AdminLayout';
 
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <MainLayout />,
+    children: [
+      { index: true, element: <Home /> },
+      { path: 'services', element: <Services /> },
+      { path: 'services/:id', element: <ServiceDetail /> },
+      { path: 'about', element: <About /> },
+      { path: 'contact', element: <Contact /> },
+      { path: 'renovation', element: <Renovation /> },
+      { path: 'realisations', element: <Realizations /> },
+      { path: 'realisations/:id', element: <RealizationDetail /> },
+      { path: 'devis', element: <QuoteRequest /> },
+      { path: 'faq', element: <FAQ /> },
+      { path: 'politiques', element: <Politiques /> },
+      { path: 'extension', element: <Extension /> },
+      { path: 'amenagement', element: <Amenagement /> },
+      { path: 'conseils', element: <Conseils /> },
+    ],
+  },
+  { path: '/admin/login', element: <AdminLogin /> },
+  {
+    path: '/admin',
+    element: <AdminLayout />,
+    children: [
+      { index: true, element: <AdminDashboard /> },
+      { path: 'requests', element: <AdminRequests /> },
+      { path: 'requests/:id', element: <RenovationDetails /> },
+      { path: 'realizations', element: <AdminRealizations /> },
+      { path: 'realizations/add', element: <AddRealization /> },
+    ],
+  },
+  {
+    path: '*',
+    element: (
+      <MainLayout>
+        <div className="min-h-screen py-20 bg-gray-50 flex items-center justify-center">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold text-gray-800 mb-4">404</h1>
+            <p className="text-gray-600 mb-6">Page non trouvée</p>
+            <a href="/" className="btn-orange">
+              Retour à l'accueil
+            </a>
+          </div>
+        </div>
+      </MainLayout>
+    ),
+  },
+]);
+
 const AppRoutes = () => {
-  return (
-    <BrowserRouter>
-      <Routes>
-
-        <Route path="/" element={<MainLayout />}>
-          <Route index element={<Home />} />
-          <Route path="services" element={<Services />} />
-          <Route path="services/:id" element={<ServiceDetail />} />
-          <Route path="about" element={<About />} />
-          <Route path="contact" element={<Contact />} />
-          <Route path="renovation" element={<Renovation />} />
-          <Route path="realisations" element={<Realizations />} />
-          <Route path="realisations/:id" element={<RealizationDetail />} />
-          <Route path="devis" element={<QuoteRequest />} />
-          <Route path="faq" element={<FAQ />} />
-          <Route path="politiques" element={<Politiques />} />
-          <Route path="extension" element={<Extension />} />
-          <Route path="amenagement" element={<Amenagement />} />
-          <Route path="conseils" element={<Conseils />} />
-        </Route>
-
-
-        <Route path="/admin/login" element={<AdminLogin />} />
-
-
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<AdminDashboard />} />
-          <Route path="requests" element={<AdminRequests />} />
-          <Route path="requests/:id" element={<RenovationDetails />} />
-          <Route path="realizations" element={<AdminRealizations />} />
-          <Route path="realizations/add" element={<AddRealization />} />
-        </Route>
-
-
-        <Route
-          path="*"
-          element={
-            <MainLayout>
-              <div className="min-h-screen py-20 bg-gray-50 flex items-center justify-center">
-                <div className="text-center">
-                  <h1 className="text-4xl font-bold text-gray-800 mb-4">404</h1>
-                  <p className="text-gray-600 mb-6">Page non trouvée</p>
-                  <a href="/" className="btn-orange">
-                    Retour à l'accueil
-                  </a>
-                </div>
-              </div>
-            </MainLayout>
-          }
-        />
-      </Routes>
-    </BrowserRouter>
-  );
+  return <RouterProvider router={router} />;
 };
 
 export default AppRoutes;
