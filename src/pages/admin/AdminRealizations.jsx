@@ -13,6 +13,7 @@ const AdminRealizations = () => {
   const [selectedProjectId, setSelectedProjectId] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [deletingAll, setDeletingAll] = useState(false);
 
   useEffect(() => {
     loadRealizations();
@@ -117,20 +118,102 @@ const AdminRealizations = () => {
     });
   };
 
+  const handleDeleteAll = () => {
+    if (realizations.length === 0) return;
+    toast((t) => (
+      <div className="flex flex-col gap-3">
+        <p className="font-bold text-gray-900">Supprimer toutes les réalisations ?</p>
+        <p className="text-sm text-gray-600">
+          Vous êtes sur le point de supprimer <strong>{realizations.length} projet{realizations.length > 1 ? 's' : ''}</strong>. Cette action est irréversible.
+        </p>
+        <div className="flex gap-2 mt-2">
+          <button
+            onClick={async () => {
+              toast.dismiss(t.id);
+              setDeletingAll(true);
+              const loadingToast = toast.loading(`Suppression de ${realizations.length} projet${realizations.length > 1 ? 's' : ''}...`, {
+                style: {
+                  borderRadius: '0.5rem 1.5rem 1.5rem 0.5rem',
+                  border: '2px solid #EF4444',
+                },
+              });
+              try {
+                for (const project of realizations) {
+                  await deleteRealization(project.id);
+                }
+                setRealizations([]);
+                await loadRealizations();
+                toast.success('Tous les projets ont été supprimés', {
+                  id: loadingToast,
+                  icon: '🗑️',
+                  style: {
+                    borderRadius: '0.5rem 1.5rem 1.5rem 0.5rem',
+                    border: '2px solid #10B981',
+                  },
+                });
+              } catch (err) {
+                toast.error('Erreur lors de la suppression: ' + err.message, {
+                  id: loadingToast,
+                  icon: '❌',
+                  style: {
+                    borderRadius: '0.5rem 1.5rem 1.5rem 0.5rem',
+                    border: '2px solid #EF4444',
+                  },
+                });
+                await loadRealizations();
+              } finally {
+                setDeletingAll(false);
+              }
+            }}
+            className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-asymmetric text-sm transition-colors"
+          >
+            Tout supprimer
+          </button>
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-asymmetric text-sm transition-colors"
+          >
+            Annuler
+          </button>
+        </div>
+      </div>
+    ), {
+      duration: 15000,
+      style: {
+        borderRadius: '0.5rem 1.5rem 1.5rem 0.5rem',
+        border: '2px solid #EF4444',
+        padding: '16px',
+        minWidth: '320px',
+      },
+    });
+  };
+
   return (
     <div className="space-y-6">
 
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Projets réalisés</h1>
           <p className="text-gray-600 mt-1">Gérez les projets affichés dans la section réalisations</p>
         </div>
-        <Link
-          to="/admin/realizations/add"
-          className="bg-orange hover:bg-orange-dark text-white font-bold py-2 px-6 rounded-asymmetric transition-colors"
-        >
-          + Ajouter un projet
-        </Link>
+        <div className="flex items-center gap-3">
+          {realizations.length > 0 && (
+            <button
+              type="button"
+              onClick={handleDeleteAll}
+              disabled={deletingAll || loading}
+              className="border-2 border-red-500 text-red-600 hover:bg-red-50 font-bold py-2 px-4 rounded-asymmetric transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+            >
+              {deletingAll ? 'Suppression...' : 'Supprimer tout'}
+            </button>
+          )}
+          <Link
+            to="/admin/realizations/add"
+            className="bg-orange hover:bg-orange-dark text-white font-bold py-2 px-6 rounded-asymmetric transition-colors"
+          >
+            + Ajouter un projet
+          </Link>
+        </div>
       </div>
 
 
