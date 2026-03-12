@@ -1,5 +1,6 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import MainLayout from '../components/layout/MainLayout';
+import ScrollToTop from '../components/ScrollToTop';
 
 import Home from '../pages/Home';
 import Services from '../pages/Services';
@@ -27,9 +28,17 @@ import AdminLayout from '../components/layout/AdminLayout';
 
 const router = createBrowserRouter([
   {
-    path: '/',
-    element: <MainLayout />,
+    element: (
+      <>
+        <ScrollToTop />
+        <Outlet />
+      </>
+    ),
     children: [
+      {
+        path: '/',
+        element: <MainLayout />,
+        children: [
       { index: true, element: <Home /> },
       { path: 'services', element: <Services /> },
       { path: 'services/:id', element: <ServiceDetail /> },
@@ -44,35 +53,37 @@ const router = createBrowserRouter([
       { path: 'extension', element: <Extension /> },
       { path: 'amenagement', element: <Amenagement /> },
       { path: 'conseils', element: <Conseils /> },
+        ],
+      },
+      { path: '/admin/login', element: <AdminLogin /> },
+      {
+        path: '/admin',
+        element: <AdminLayout />,
+        children: [
+          { index: true, element: <AdminDashboard /> },
+          { path: 'requests', element: <AdminRequests /> },
+          { path: 'requests/:id', element: <RenovationDetails /> },
+          { path: 'realizations', element: <AdminRealizations /> },
+          { path: 'realizations/add', element: <AddRealization /> },
+        ],
+      },
+      {
+        path: '*',
+        element: (
+          <MainLayout>
+            <div className="min-h-screen py-20 bg-gray-50 flex items-center justify-center">
+              <div className="text-center">
+                <h1 className="text-4xl font-bold text-gray-800 mb-4">404</h1>
+                <p className="text-gray-600 mb-6">Page non trouvée</p>
+                <a href="/" className="btn-orange">
+                  Retour à l'accueil
+                </a>
+              </div>
+            </div>
+          </MainLayout>
+        ),
+      },
     ],
-  },
-  { path: '/admin/login', element: <AdminLogin /> },
-  {
-    path: '/admin',
-    element: <AdminLayout />,
-    children: [
-      { index: true, element: <AdminDashboard /> },
-      { path: 'requests', element: <AdminRequests /> },
-      { path: 'requests/:id', element: <RenovationDetails /> },
-      { path: 'realizations', element: <AdminRealizations /> },
-      { path: 'realizations/add', element: <AddRealization /> },
-    ],
-  },
-  {
-    path: '*',
-    element: (
-      <MainLayout>
-        <div className="min-h-screen py-20 bg-gray-50 flex items-center justify-center">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold text-gray-800 mb-4">404</h1>
-            <p className="text-gray-600 mb-6">Page non trouvée</p>
-            <a href="/" className="btn-orange">
-              Retour à l'accueil
-            </a>
-          </div>
-        </div>
-      </MainLayout>
-    ),
   },
 ]);
 
